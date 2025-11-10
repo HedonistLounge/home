@@ -5,80 +5,84 @@
 <title>Hedonist Lounge — Home</title>
 <meta name="theme-color" content="#0b0b0c">
 <style>
-:root{--bg:#0b0b0c;--fg:#fff;--muted:#a7a7a7;--card:#131416;--glow1:#19f0a8;--glow2:#6c48ff;--btn:#17181a;--border:rgba(255,255,255,.1)}
-*{box-sizing:border-box}html,body{height:100%;margin:0;background:
+:root{--bg:#0b0b0c;--fg:#fff;--muted:#a7a7a7;--card:#131416;--border:rgba(255,255,255,.12);--accent:#19f0a8;--glow:#6c48ff}
+*{box-sizing:border-box}html,body{height:100%}
+body{margin:0;background:
 radial-gradient(1200px 700px at 15% -10%,rgba(25,240,168,.08),transparent),
 radial-gradient(1000px 600px at 110% 0%,rgba(108,72,255,.07),transparent),
-var(--bg);color:var(--fg);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;display:flex;align-items:center;justify-content:center;padding:22px}
-.wrap{width:100%;max-width:560px}
-.shell{position:relative;border-radius:24px;overflow:hidden;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,0));border:1px solid rgba(255,255,255,.08);box-shadow:0 30px 80px rgba(0,0,0,.55)}
-.fx{position:absolute;inset:-25% -35% -35% -35%;filter:blur(60px);opacity:.35;pointer-events:none}
-.b{position:absolute;border-radius:50%;mix-blend-mode:screen;animation:float 20s ease-in-out infinite}
-.b.a{width:480px;height:480px;left:-8%;top:-10%;background:radial-gradient(circle at 30% 30%,var(--glow1),transparent 60%)}
-.b.c{width:400px;height:400px;right:-10%;top:0;background:radial-gradient(circle at 60% 40%,var(--glow2),transparent 60%);animation-direction:reverse}
-.b.d{width:340px;height:340px;left:35%;bottom:-10%;background:radial-gradient(circle at 40% 60%,#00d2ff,transparent 60%);animation-duration:24s}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(18px)}}
-.header{position:relative;z-index:1;padding:18px;display:flex;align-items:center;gap:14px}
-.logo{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-weight:900;background:linear-gradient(135deg,#19f0a8,#00e0ff);color:#0a0a0a;box-shadow:0 10px 30px rgba(25,240,168,.25)}
-.title{font-size:clamp(22px,4vw,30px);margin:0;letter-spacing:.2px}
-.sub{margin:2px 0 0;color:var(--muted);font-size:13px}
-.block{position:relative;z-index:1;padding:14px}
-.card{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:18px;overflow:hidden}
-.badge{display:flex;align-items:center;gap:8px;padding:10px 12px;border-top:1px solid rgba(255,255,255,.06);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))}
+var(--bg);
+color:var(--fg);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+.container{max-width:720px;margin:0 auto;padding:22px}
+.header{display:flex;align-items:center;gap:14px;margin:8px 0 18px}
+.logo{width:56px;height:56px;border-radius:16px;overflow:hidden;flex:0 0 56px;box-shadow:0 10px 30px rgba(25,240,168,.25)}
+.title h1{margin:0;font-size:clamp(22px,4vw,32px);letter-spacing:.2px}
+.title p{margin:4px 0 0;font-size:13px;color:var(--muted)}
+.card{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,0));border:1px solid var(--border);border-radius:20px;box-shadow:0 24px 70px rgba(0,0,0,.5);overflow:hidden}
+.card-head{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))}
 .dot{width:9px;height:9px;border-radius:50%;background:radial-gradient(circle at 40% 40%,#3cffc3,#00e39a);box-shadow:0 0 12px rgba(25,240,168,.8),0 0 22px rgba(25,240,168,.4);animation:pulse 1.6s ease-in-out infinite}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
-.scale{position:relative;display:flex;justify-content:center;background:#0e0e10}
-.scale>div{transform-origin:top center}
-.frame{width:420px;height:760px;border:0;display:block;background:#0e0e10}
+.card-body{padding:14px}
+.player{display:flex;justify-content:center;background:#0e0e10;border:1px solid rgba(255,255,255,.06);border-radius:16px}
+.player-inner{transform-origin:top center}
+.player-frame{width:420px;height:760px;border:0;display:block;background:#0e0e10;border-radius:12px}
+.section{margin:18px 0}
 .list{display:grid;gap:12px}
-.btn{display:flex;align-items:center;gap:12px;padding:16px;border-radius:16px;text-decoration:none;color:var(--fg);background:var(--btn);border:1px solid var(--border);transition:transform .15s ease,box-shadow .2s ease,border-color .2s ease,background .2s ease}
+.btn{display:flex;align-items:center;gap:12px;padding:16px;border-radius:16px;text-decoration:none;color:var(--fg);background:#17181a;border:1px solid var(--border);transition:transform .15s ease,box-shadow .2s ease,border-color .2s ease,background .2s ease}
 .btn:hover{transform:translateY(-1px);box-shadow:0 14px 34px rgba(0,0,0,.35);border-color:rgba(255,255,255,.18);background:#1a1b1e}
 .emoji{font-size:18px;line-height:1}
 .txt{display:flex;flex-direction:column}
 .txt strong{font-size:16px;letter-spacing:.2px}
 .txt span{font-size:12px;color:var(--muted)}
 .hr{height:1px;border:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);margin:10px 0}
-.footer{position:relative;z-index:1;padding:10px 18px 18px;color:var(--muted);font-size:12px;text-align:center}
-@media (max-width:520px){.sub{font-size:12px}}
+.footer{margin:18px 0 6px;text-align:center;color:var(--muted);font-size:12px}
+@media (max-width:560px){.container{padding:16px}}
 </style>
 </head>
 <body>
-<main class="wrap">
-<section class="shell">
-<div class="fx"><div class="b a"></div><div class="b c"></div><div class="b d"></div></div>
-<header class="header"><div class="logo">♪</div><div><h1 class="title">Hedonist Lounge</h1><p class="sub">Real nights • Budapest</p></div></header>
-<div class="block">
-  <div class="card">
-    <div class="scale"><div id="playerScale"><iframe class="frame" src="https://display.soundtrack.io/BLLARJ" allowfullscreen loading="eager" referrerpolicy="no-referrer" title="Now Playing"></iframe></div></div>
-    <div class="badge"><span class="dot"></span><span style="font-weight:700;letter-spacing:.2px;color:#dcdcdc">NOW PLAYING</span></div>
+<div class="container">
+  <div class="header">
+    <img class="logo" alt="Hedonist" src="data:image/svg+xml;utf8,<?xml version='1.0'?><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%2319f0a8'/><stop offset='1' stop-color='%2300e0ff'/></linearGradient></defs><rect width='120' height='120' rx='20' fill='url(%23g)'/><text x='60' y='78' text-anchor='middle' font-family='Arial, Helvetica, sans-serif' font-size='64' fill='%230a0a0a'>♪</text></svg>">
+    <div class="title">
+      <h1>Hedonist Lounge</h1>
+      <p>Real nights • Budapest</p>
+    </div>
   </div>
-</div>
-<div class="block">
-  <div class="list">
-    <a class="btn" href="https://www.facebook.com/hedonistbudapest2/events" target="_blank"><div class="emoji">🗓️</div><div class="txt"><strong>Events</strong><span>What’s on this week</span></div></a>
-    <div class="hr"></div>
-    <a class="btn" href="https://open.spotify.com/playlist/26tdudnXR3SUfCjyElU09Z?si=iNsLSwXdTMqQRrrr4ZC6Iw" target="_blank"><div class="emoji">☀️</div><div class="txt"><strong>Goood Morning Budapest</strong><span>Smooth sunrise vibes</span></div></a>
-    <a class="btn" href="https://open.spotify.com/playlist/04n8porc6EUwHQ3fr5iN6i?si=ushVdx3OQa2KVB0pgLihfQ" target="_blank"><div class="emoji">🌞</div><div class="txt"><strong>Have a lovely day</strong><span>Daytime groove</span></div></a>
-    <a class="btn" href="https://open.spotify.com/playlist/592sxbGZtkpqE8T3t4ocGL?si=E_U8CaREQh6b4aboeX5CkQ&pi=EBFfo2PvRg2HF" target="_blank"><div class="emoji">🌙</div><div class="txt"><strong>Night is young</strong><span>Dark rhythm</span></div></a>
-    <div class="hr"></div>
-    <a class="btn" href="https://www.facebook.com/hedonistbudapest2" target="_blank"><div class="emoji">📘</div><div class="txt"><strong>Facebook</strong><span>Updates & events</span></div></a>
-    <a class="btn" href="https://www.instagram.com/hedonistbudapest_" target="_blank"><div class="emoji">📸</div><div class="txt"><strong>Instagram</strong><span>Stories & moments</span></div></a>
+
+  <div class="card section">
+    <div class="card-head"><span class="dot"></span><span style="font-weight:700;letter-spacing:.2px;color:#e8e8e8">NOW PLAYING</span></div>
+    <div class="card-body">
+      <div class="player"><div id="playerScale" class="player-inner"><iframe class="player-frame" src="https://display.soundtrack.io/BLLARJ" allowfullscreen loading="eager" referrerpolicy="no-referrer" title="Now Playing"></iframe></div></div>
+    </div>
   </div>
+
+  <div class="section">
+    <div class="list">
+      <a class="btn" href="https://www.facebook.com/hedonistbudapest2/events" target="_blank"><div class="emoji">🗓️</div><div class="txt"><strong>Events</strong><span>What’s on this week</span></div></a>
+      <div class="hr"></div>
+      <a class="btn" href="https://open.spotify.com/playlist/26tdudnXR3SUfCjyElU09Z?si=iNsLSwXdTMqQRrrr4ZC6Iw" target="_blank"><div class="emoji">☀️</div><div class="txt"><strong>Goood Morning Budapest</strong><span>Smooth sunrise vibes</span></div></a>
+      <a class="btn" href="https://open.spotify.com/playlist/04n8porc6EUwHQ3fr5iN6i?si=ushVdx3OQa2KVB0pgLihfQ" target="_blank"><div class="emoji">🌞</div><div class="txt"><strong>Have a lovely day</strong><span>Daytime groove</span></div></a>
+      <a class="btn" href="https://open.spotify.com/playlist/592sxbGZtkpqE8T3t4ocGL?si=E_U8CaREQh6b4aboeX5CkQ&pi=EBFfo2PvRg2HF" target="_blank"><div class="emoji">🌙</div><div class="txt"><strong>Night is young</strong><span>Dark rhythm</span></div></a>
+      <div class="hr"></div>
+      <a class="btn" href="https://www.facebook.com/hedonistbudapest2" target="_blank"><div class="emoji">📘</div><div class="txt"><strong>Facebook</strong><span>Updates & events</span></div></a>
+      <a class="btn" href="https://www.instagram.com/hedonistbudapest_" target="_blank"><div class="emoji">📸</div><div class="txt"><strong>Instagram</strong><span>Stories & moments</span></div></a>
+    </div>
+  </div>
+
+  <div class="footer">© Hedonist Lounge — Budapest</div>
 </div>
-<div class="footer">© Hedonist Lounge — Budapest</div>
-</section>
-</main>
+
 <script>
 (function(){
-  var baseW=420, baseH=760;
+  var W=420,H=760;
   function fit(){
-    var container=document.querySelector('.scale');
     var inner=document.getElementById('playerScale');
-    var maxW=container.clientWidth;
-    var maxH=Math.min(window.innerHeight*0.7, 680);
-    var s=Math.min(maxW/baseW, maxH/baseH);
+    var card=document.querySelector('.card-body');
+    var maxW=card.clientWidth-4;
+    var maxH=Math.min(window.innerHeight*0.62, 620);
+    var s=Math.min(maxW/W, maxH/H);
     inner.style.transform='scale('+s+')';
-    container.style.height=(baseH*s)+'px';
+    inner.style.margin='0 auto';
+    card.style.height=(H*s+16)+'px';
   }
   window.addEventListener('resize', fit, {passive:true});
   window.addEventListener('orientationchange', fit, {passive:true});
