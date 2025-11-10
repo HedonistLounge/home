@@ -7,15 +7,25 @@
 <meta name="description" content="Hedonist Lounge — Real nights in Budapest. Explore events, playlists, and the live soundtrack playing now.">
 <meta name="theme-color" content="#0b0b0c">
 <link rel="icon" type="image/png" href="H.png">
+<link rel="preload" as="image" href="H.png" imagesrcset="H.png 1x">
 <link rel="preconnect" href="https://display.soundtrack.io" crossorigin>
 <link rel="dns-prefetch" href="//display.soundtrack.io">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+<meta property="og:title" content="Hedonist Lounge — Real nights • Budapest">
+<meta property="og:description" content="Live soundtrack, upcoming events, and curated playlists.">
+<meta property="og:image" content="H.png">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="tr_TR">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hedonist Lounge — Real nights • Budapest">
+<meta name="twitter:description" content="Live soundtrack, upcoming events, and curated playlists.">
 <style>
 :root{--bg:#0b0b0c;--fg:#fff;--muted:#9b9b9b;--neon1:#19f0a8;--neon2:#6c48ff;--font:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
 *{box-sizing:border-box;margin:0;padding:0}
 body{margin:0;color:var(--fg);font-family:var(--font);background:radial-gradient(circle at 15% 25%,rgba(25,240,168,.05),transparent 70%),radial-gradient(circle at 80% 75%,rgba(108,72,255,.06),transparent 70%),var(--bg);background-size:200% 200%;animation:aurora 22s ease-in-out infinite alternate;overflow-x:hidden;position:relative}
 @keyframes aurora{0%{background-position:20% 20%,80% 80%}100%{background-position:70% 40%,30% 90%}}
+@media (prefers-reduced-motion: reduce){body{animation:none}}
 .container{max-width:720px;margin:0 auto;padding:24px;position:relative;z-index:2}
 .header-link{text-decoration:none;color:inherit;display:block}
 .header{display:flex;align-items:center;gap:16px;margin-bottom:20px}
@@ -30,6 +40,7 @@ body{margin:0;color:var(--fg);font-family:var(--font);background:radial-gradient
 .card-head-title{font-weight:700;color:#e8e8e8;font-size:13px;display:flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.8px}
 .dot{width:9px;height:9px;border-radius:50%;background:radial-gradient(circle at 40% 40%,#3cffc3,#00e39a);box-shadow:0 0 10px rgba(25,240,168,.72);animation:pulse 2s ease-in-out infinite}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+@media (prefers-reduced-motion: reduce){.dot{animation:none}}
 .toggle-btn{background:none;border:1px solid rgba(255,255,255,.08);color:var(--muted);font-size:13px;border-radius:10px;padding:4px 9px;cursor:pointer;transition:all .25s ease;backdrop-filter:blur(8px)}
 .toggle-btn:hover{color:var(--fg);border-color:rgba(255,255,255,.25)}
 
@@ -49,11 +60,15 @@ body{margin:0;color:var(--fg);font-family:var(--font);background:radial-gradient
 .hr{height:1px;border:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);margin:12px 0}
 .footer{text-align:center;color:var(--muted);font-size:13px;margin:22px 0 8px;letter-spacing:.4px}
 .footer span{color:var(--neon1)}
+
+.share{margin-top:10px;display:flex;justify-content:center}
+.share button{background:rgba(26,27,30,.7);color:var(--fg);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:10px 14px;cursor:pointer;transition:.2s}
+.share button:hover{border-color:rgba(255,255,255,.25);transform:translateY(-1px)}
 </style>
 </head>
 <body>
 <div class="container">
-  <a href="#" class="header-link">
+  <a href="#" class="header-link" aria-label="Hedonist Lounge ana sayfa">
     <div class="header">
       <div class="logo"><img src="H.png" alt="Hedonist Logo"></div>
       <div class="title">
@@ -63,14 +78,14 @@ body{margin:0;color:var(--fg);font-family:var(--font);background:radial-gradient
     </div>
   </a>
 
-  <div class="card section">
+  <div class="card section" aria-label="Now Playing">
     <div class="card-head">
       <div class="card-head-title"><span class="dot"></span>NOW PLAYING</div>
-      <button id="togglePlayer" class="toggle-btn">🎧 Hide Player</button>
+      <button id="togglePlayer" class="toggle-btn" aria-controls="player" aria-expanded="true">🎧 Hide Player</button>
     </div>
     <div class="card-body">
       <div id="player" class="player">
-        <iframe class="player-frame" src="https://display.soundtrack.io/BLLARJ" allowfullscreen loading="eager" referrerpolicy="no-referrer"></iframe>
+        <iframe class="player-frame" src="https://display.soundtrack.io/BLLARJ" allowfullscreen loading="eager" referrerpolicy="no-referrer" title="Soundtrack Now Playing"></iframe>
       </div>
     </div>
   </div>
@@ -78,22 +93,26 @@ body{margin:0;color:var(--fg);font-family:var(--font);background:radial-gradient
   <div class="section">
     <div class="list">
       <h2 class="section-title">Find Us</h2>
-      <a class="btn" href="https://www.facebook.com/hedonistbudapest2/events" target="_blank"><div class="emoji">🗓️</div><div class="txt"><strong>Events</strong><span>What’s on this week</span></div></a>
+      <a class="btn" href="https://www.facebook.com/hedonistbudapest2/events" target="_blank" rel="noopener"><div class="emoji">🗓️</div><div class="txt"><strong>Events</strong><span>Upcoming nights & tickets</span></div></a>
 
       <div class="hr"></div>
       <h2 class="section-title">Playlists</h2>
-      <a class="btn" href="https://open.spotify.com/playlist/26tdudnXR3SUfCjyElU09Z?si=iNsLSwXdTMqQRrrr4ZC6Iw" target="_blank"><div class="emoji">☀️</div><div class="txt"><strong>Goood Morning Budapest</strong><span>Smooth sunrise vibes</span></div></a>
-      <a class="btn" href="https://open.spotify.com/playlist/04n8porc6EUwHQ3fr5iN6i?si=ushVdx3OQa2KVB0pgLihfQ" target="_blank"><div class="emoji">🌞</div><div class="txt"><strong>Have a lovely day</strong><span>Daytime groove</span></div></a>
-      <a class="btn" href="https://open.spotify.com/playlist/592sxbGZtkpqE8T3t4ocGL?si=E_U8CaREQh6b4aboeX5CkQ&pi=EBFfo2PvRg2HF" target="_blank"><div class="emoji">🌙</div><div class="txt"><strong>Night is young</strong><span>Dark rhythm</span></div></a>
+      <a class="btn" href="https://open.spotify.com/playlist/26tdudnXR3SUfCjyElU09Z?si=iNsLSwXdTMqQRrrr4ZC6Iw" target="_blank" rel="noopener"><div class="emoji">☀️</div><div class="txt"><strong>Goood Morning Budapest</strong><span>Breakfast time • calm & easy</span></div></a>
+      <a class="btn" href="https://open.spotify.com/playlist/04n8porc6EUwHQ3fr5iN6i?si=ushVdx3OQa2KVB0pgLihfQ" target="_blank" rel="noopener"><div class="emoji">🌞</div><div class="txt"><strong>Have a lovely day</strong><span>Pre-party time • warm & groovy</span></div></a>
+      <a class="btn" href="https://open.spotify.com/playlist/592sxbGZtkpqE8T3t4ocGL?si=E_U8CaREQh6b4aboeX5CkQ&pi=EBFfo2PvRg2HF" target="_blank" rel="noopener"><div class="emoji">🌙</div><div class="txt"><strong>Night is young</strong><span>Party time • deep & electric</span></div></a>
 
       <div class="hr"></div>
       <h2 class="section-title">Follow Us</h2>
-      <a class="btn" href="https://www.facebook.com/hedonistbudapest2" target="_blank"><div class="emoji">📘</div><div class="txt"><strong>Facebook</strong><span>Updates & events</span></div></a>
-      <a class="btn" href="https://www.instagram.com/hedonistbudapest_" target="_blank"><div class="emoji">📸</div><div class="txt"><strong>Instagram</strong><span>Stories & moments</span></div></a>
+      <a class="btn" href="https://www.facebook.com/hedonistbudapest2" target="_blank" rel="noopener"><div class="emoji">📘</div><div class="txt"><strong>Facebook</strong><span>Updates & events</span></div></a>
+      <a class="btn" href="https://www.instagram.com/hedonistbudapest_" target="_blank" rel="noopener"><div class="emoji">📸</div><div class="txt"><strong>Instagram</strong><span>Stories & moments</span></div></a>
 
       <div class="hr"></div>
       <h2 class="section-title">Feedback</h2>
       <a class="btn" href="mailto:hedonistlounge@hotmail.com"><div class="emoji">💭</div><div class="txt"><strong>Share a Thought</strong><span>We read everything</span></div></a>
+
+      <div class="share">
+        <button id="shareBtn" aria-label="Copy site link">Share this page</button>
+      </div>
     </div>
   </div>
 
@@ -104,11 +123,30 @@ document.addEventListener('DOMContentLoaded',function(){
   const player=document.getElementById('player');
   const toggleBtn=document.getElementById('togglePlayer');
   const isHidden=localStorage.getItem('playerHidden')==='true';
-  if(isHidden){player.classList.add('hidden');toggleBtn.textContent='🎧 Show Player'}
+  if(isHidden){player.classList.add('hidden');toggleBtn.textContent='🎧 Show Player';toggleBtn.setAttribute('aria-expanded','false')}
   toggleBtn.addEventListener('click',function(){
     const hidden=player.classList.toggle('hidden');
     toggleBtn.textContent=hidden?'🎧 Show Player':'🎧 Hide Player';
+    toggleBtn.setAttribute('aria-expanded', String(!hidden));
     localStorage.setItem('playerHidden',hidden?'true':'false');
+  });
+
+  document.addEventListener('keydown',function(e){
+    if(e.key.toLowerCase()==='p'){toggleBtn.click()}
+  });
+
+  const shareBtn=document.getElementById('shareBtn');
+  shareBtn.addEventListener('click',async function(){
+    const url=window.location.href;
+    if(navigator.share){
+      try{await navigator.share({title:'Hedonist Lounge',text:'Real nights • Budapest',url});}catch(_){}
+    }else if(navigator.clipboard){
+      try{await navigator.clipboard.writeText(url);shareBtn.textContent='Link copied';setTimeout(()=>shareBtn.textContent='Share this page',1800);}catch(_){}
+    }else{
+      const input=document.createElement('input');
+      input.value=url;document.body.appendChild(input);input.select();document.execCommand('copy');document.body.removeChild(input);
+      shareBtn.textContent='Link copied';setTimeout(()=>shareBtn.textContent='Share this page',1800);
+    }
   });
 });
 </script>
