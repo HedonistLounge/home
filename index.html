@@ -1,61 +1,43 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Now Playing @ Hedonist</title>
-  <meta name="description" content="See what's spinning right now at Hedonist Lounge — live Now Playing feed." />
-  <meta property="og:title" content="Now Playing @ Hedonist" />
-  <meta property="og:description" content="Live track from Hedonist Lounge via Soundtrack." />
-  <meta property="og:type" content="website" />
-  <meta name="theme-color" content="#0f0f10" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%2300ff9d'/%3E%3Ctext x='50' y='58' font-size='56' text-anchor='middle' fill='%230f0f10' font-family='Arial'%3E♪%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="./assets/style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Now Playing @ Hedonist</title>
+<meta name="theme-color" content="#0b0b0c">
+<style>
+:root{--bg:#0b0b0c;--fg:#fff;--muted:#a7a7a7;--card:#131416;--glow1:#19f0a8;--glow2:#6c48ff}
+*{box-sizing:border-box}html,body{height:100%}
+body{margin:0;background:
+radial-gradient(1200px 700px at 15% -10%,rgba(25,240,168,.08),transparent),
+radial-gradient(1000px 600px at 110% 0%,rgba(108,72,255,.07),transparent),
+var(--bg);
+color:var(--fg);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;display:flex;align-items:center;justify-content:center;padding:20px}
+.wrap{width:100%;max-width:520px}
+.shell{position:relative;border-radius:24px;overflow:hidden;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,0));border:1px solid rgba(255,255,255,.08);box-shadow:0 30px 80px rgba(0,0,0,.55)}
+.fx{position:absolute;inset:-25% -35% -35% -35%;filter:blur(60px);opacity:.35;pointer-events:none}
+.b{position:absolute;border-radius:50%;mix-blend-mode:screen;animation:float 20s ease-in-out infinite}
+.b.a{width:420px;height:420px;left:-6%;top:-6%;background:radial-gradient(circle at 30% 30%,var(--glow1),transparent 60%)}
+.b.c{width:360px;height:360px;right:-8%;top:0;background:radial-gradient(circle at 60% 40%,var(--glow2),transparent 60%);animation-direction:reverse}
+.b.d{width:300px;height:300px;left:35%;bottom:-10%;background:radial-gradient(circle at 40% 60%,#00d2ff,transparent 60%);animation-duration:24s}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(18px)}}
+.frame{position:relative;background:var(--card);border-top-left-radius:24px;border-top-right-radius:24px;border-bottom:1px solid rgba(255,255,255,.06)}
+iframe{display:block;width:100%;height:680px;border:0;background:#0e0e10}
+@media (max-width:520px){iframe{height:620px}}
+.bar{display:flex;align-items:center;justify-content:center;gap:10px;padding:12px 14px;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,0))}
+.dot{width:9px;height:9px;border-radius:50%;background:radial-gradient(circle at 40% 40%,#3cffc3,#00e39a);box-shadow:0 0 12px rgba(25,240,168,.8),0 0 22px rgba(25,240,168,.4);animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
+.txt{font-weight:700;letter-spacing:.2px;color:var(--muted)}
+</style>
 </head>
 <body>
-  <div class="bg">
-    <div class="orb orb-a"></div>
-    <div class="orb orb-b"></div>
-    <div class="orb orb-c"></div>
-  </div>
-
-  <main class="wrap">
-    <header class="hero">
-      <div class="brand">
-        <div class="logo">♪</div>
-        <div class="titles">
-          <h1>Now Playing <span class="at">@ Hedonist</span></h1>
-          <p class="sub">Live from Soundtrack — always up to date.</p>
-        </div>
-      </div>
-      <nav class="actions">
-        <a class="btn ghost" href="https://linktr.ee/hedonistlounge" target="_blank" rel="noopener">Back to Linktree</a>
-        <a class="btn solid" href="https://display.soundtrack.io/BLLARJ" target="_blank" rel="noopener">Open Full Display</a>
-      </nav>
-    </header>
-
-    <section class="card">
-      <div class="frame-wrap">
-        <div class="loading" id="loading">
-          <div class="spinner"></div>
-          <span>Loading current track…</span>
-        </div>
-        <iframe id="playerFrame" src="https://display.soundtrack.io/BLLARJ" title="Now Playing Display" loading="eager"></iframe>
-      </div>
-      <div class="foot">
-        <button class="btn tiny" id="refreshBtn" aria-label="Refresh now playing">Refresh</button>
-        <span class="hint">Tip: add this page to your Linktree as “🎧 Now Playing @ Hedonist”.</span>
-      </div>
-    </section>
-
-    <footer class="mini">
-      <small>© Hedonist Lounge — Budapest</small>
-    </footer>
-  </main>
-
-  <script src="./assets/script.js"></script>
+<main class="wrap">
+<section class="shell">
+<div class="fx"><div class="b a"></div><div class="b c"></div><div class="b d"></div></div>
+<div class="frame"><iframe src="https://display.soundtrack.io/BLLARJ" allowfullscreen loading="eager" referrerpolicy="no-referrer" title="Now Playing"></iframe></div>
+<div class="bar"><span class="dot"></span><span class="txt">NOW PLAYING</span></div>
+</section>
+</main>
 </body>
 </html>
+
