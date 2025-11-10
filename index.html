@@ -24,11 +24,9 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;background:var(--bg);color:var(--fg);font-family:var(--font);overflow-x:hidden;scroll-behavior:smooth}
-canvas#bg{
-  position:fixed;top:0;left:0;width:100%;height:100%;
-  z-index:-2;pointer-events:none;background:radial-gradient(circle at 30% 30%,rgba(25,240,168,.05),transparent 60%),radial-gradient(circle at 70% 70%,rgba(108,72,255,.05),transparent 60%),var(--bg);
-}
+canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-2;pointer-events:none}
 .container{max-width:720px;margin:0 auto;padding:24px;position:relative;z-index:2}
+.header-link{text-decoration:none;color:inherit;display:block}
 .header{display:flex;align-items:center;gap:16px;margin-bottom:20px}
 .logo{width:65px;height:65px;border-radius:16px;overflow:hidden;box-shadow:0 0 30px rgba(25,240,168,.25);flex-shrink:0;transition:transform .3s ease,box-shadow .3s ease}
 .logo:hover{transform:scale(1.08);box-shadow:0 0 40px rgba(25,240,168,.5)}
@@ -47,9 +45,10 @@ box-shadow:0 0 15px rgba(25,240,168,.9);animation:pulse 1.8s ease-in-out infinit
 .toggle-btn{background:none;border:1px solid var(--border);color:var(--muted);font-size:13px;border-radius:12px;
 padding:5px 12px;cursor:pointer;transition:all .25s ease;backdrop-filter:blur(10px)}
 .toggle-btn:hover{color:var(--fg);border-color:var(--border-hover);box-shadow:0 0 12px rgba(25,240,168,.4)}
+.card-body{padding:18px}
 .player{display:flex;justify-content:center;align-items:center;background:#0e0e10;border-radius:18px;border:1px solid rgba(255,255,255,.05);
-transition:max-height .5s ease,opacity .4s ease;overflow:hidden}
-.player.hidden{max-height:0;opacity:0;pointer-events:none}
+transition:height .5s ease,opacity .4s ease;overflow:hidden;height:520px}
+.player.hidden{height:0;opacity:0;padding:0;margin:0;border:0}
 .player-frame{width:100%;max-width:380px;height:480px;border:0;transform:scale(.85);transform-origin:top center}
 .section{margin:26px 0}
 .section-title{font-size:16px;font-weight:800;letter-spacing:.8px;color:#fff;margin:22px 0 14px;text-shadow:0 0 10px rgba(25,240,168,.3)}
@@ -74,13 +73,15 @@ opacity:0;transition:opacity .3s ease}
 <canvas id="bg"></canvas>
 
 <div class="container">
-  <div class="header">
-    <div class="logo"><img src="H.png" alt="Hedonist Logo"></div>
-    <div class="title">
-      <h1>Hedonist Lounge</h1>
-      <p>Real nights • Budapest</p>
+  <a href="#" class="header-link">
+    <div class="header">
+      <div class="logo"><img src="H.png" alt="Hedonist Logo"></div>
+      <div class="title">
+        <h1>Hedonist Lounge</h1>
+        <p>Real nights • Budapest</p>
+      </div>
     </div>
-  </div>
+  </a>
 
   <div class="card section">
     <div class="card-head">
@@ -120,45 +121,46 @@ opacity:0;transition:opacity .3s ease}
 </div>
 
 <script>
-// player toggle
 document.addEventListener('DOMContentLoaded',()=>{
   const player=document.getElementById('player');
   const toggleBtn=document.getElementById('togglePlayer');
+  const isHidden=localStorage.getItem('playerHidden')==='true';
+  if(isHidden){player.classList.add('hidden');toggleBtn.textContent='🎧 Show Player';}
   toggleBtn.addEventListener('click',()=>{
     const hidden=player.classList.toggle('hidden');
     toggleBtn.textContent=hidden?'🎧 Show Player':'🎧 Hide Player';
+    localStorage.setItem('playerHidden',hidden?'true':'false');
   });
 });
 
-// ambient particles
 const canvas=document.getElementById('bg');
 const ctx=canvas.getContext('2d');
-let particles=[];
-let w,h;
+let particles=[],w,h;
 
 function resize(){
   w=canvas.width=window.innerWidth;
   h=canvas.height=window.innerHeight;
-  particles=Array.from({length:60},()=>({
+  particles=Array.from({length:80},()=>({
     x:Math.random()*w,
     y:Math.random()*h,
-    r:Math.random()*2+0.5,
-    dx:(Math.random()-.5)*0.4,
-    dy:(Math.random()-.5)*0.4,
-    c:Math.random()<0.5?'rgba(25,240,168,0.35)':'rgba(108,72,255,0.35)'
+    r:Math.random()*2+0.6,
+    dx:(Math.random()-.5)*0.3,
+    dy:(Math.random()-.5)*0.3,
+    c:Math.random()<0.5?'rgba(25,240,168,0.5)':'rgba(108,72,255,0.5)'
   }));
 }
 resize();
 window.addEventListener('resize',resize);
 
 function draw(){
-  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(11,11,12,0.25)';
+  ctx.fillRect(0,0,w,h);
   for(let p of particles){
     ctx.beginPath();
     ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
     ctx.fillStyle=p.c;
     ctx.shadowColor=p.c;
-    ctx.shadowBlur=15;
+    ctx.shadowBlur=18;
     ctx.fill();
     p.x+=p.dx;
     p.y+=p.dy;
