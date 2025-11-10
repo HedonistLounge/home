@@ -11,6 +11,16 @@
 <link rel="preconnect" href="https://display.soundtrack.io" crossorigin>
 <link rel="dns-prefetch" href="//display.soundtrack.io">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+
+<!-- Google Analytics 4 (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VY0CKKGRDP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-VY0CKKGRDP', { 'anonymize_ip': true });
+</script>
+
 <style>
 :root{--bg:#0b0b0c;--fg:#fff;--muted:#9b9b9b;--neon1:#19f0a8;--neon2:#6c48ff;--font:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -120,15 +130,4 @@ document.addEventListener('DOMContentLoaded',function(){
 
   const easter=document.getElementById('easter');
   const phrases=["you found the vibe","hedonist mode on","lights low, minds high","real nights only","glow with it"];
-  document.addEventListener('keydown',function(e){
-    if(e.key.toLowerCase()==='h'){
-      const text=phrases[Math.floor(Math.random()*phrases.length)];
-      easter.textContent=text;
-      easter.classList.add('show');
-      setTimeout(()=>easter.classList.remove('show'),2200);
-    }
-  });
-});
-</script>
-</body>
-</html>
+  document.addEventListener('keydown',funct
