@@ -70,7 +70,20 @@ body{margin:0;color:var(--fg);font-family:var(--font);background:radial-gradient
   <div class="card section">
     <div class="card-head">
       <div class="card-head-title"><span class="dot"></span>NOW PLAYING</div>
-      <button id="togglePlayer" class="toggle-btn">🎧 Hide Player</button>
+      <button
+        id="togglePlayer"
+        class="toggle-btn"
+        aria-controls="player"
+        aria-expanded="true"
+        onclick="(function(btn){
+          var p=document.getElementById('player');
+          if(!p) return;
+          var hidden=p.classList.toggle('hidden');
+          btn.textContent=hidden?'🎧 Show Player':'🎧 Hide Player';
+          btn.setAttribute('aria-expanded', String(!hidden));
+          try{localStorage.setItem('playerHidden', hidden?'true':'false');}catch(e){}
+        })(this)"
+      >🎧 Hide Player</button>
     </div>
     <div class="card-body">
       <div id="player" class="player">
@@ -97,4 +110,50 @@ body{margin:0;color:var(--fg);font-family:var(--font);background:radial-gradient
 
       <div class="hr"></div>
       <h2 class="section-title">Feedback</h2>
-      <a class="btn" href="mailto:hedonistlounge@hotmail.com" rel="noopener"><div class="emoji">💭</div><div class="txt"><strong>Share a Thought</strong><span>We read everything</span></di
+      <a class="btn" href="mailto:hedonistlounge@hotmail.com" rel="noopener"><div class="emoji">💭</div><div class="txt"><strong>Share a Thought</strong><span>We read everything</span></div></a>
+    </div>
+  </div>
+
+  <div class="footer" aria-label="copyright">© <span>Hedonist Lounge</span> — Budapest</div>
+</div>
+
+<div id="easter"></div>
+
+<!-- GA4 (bottom, safe) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VY0CKKGRDP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-VY0CKKGRDP', { 'anonymize_ip': true });
+</script>
+
+<script>
+(function(){
+  var player=document.getElementById('player');
+  var btn=document.getElementById('togglePlayer');
+  if(!player || !btn) return;
+  var isHidden=false;
+  try{ isHidden = (localStorage.getItem('playerHidden')==='true'); }catch(e){}
+  if(isHidden){
+    player.classList.add('hidden');
+    btn.textContent='🎧 Show Player';
+    btn.setAttribute('aria-expanded','false');
+  }else{
+    btn.setAttribute('aria-expanded','true');
+  }
+
+  var easter=document.getElementById('easter');
+  var phrases=["you found the vibe","hedonist mode on","lights low, minds high","real nights only","glow with it"];
+  document.addEventListener('keydown',function(e){
+    if((e.key||'').toLowerCase()==='h'){
+      var text=phrases[Math.floor(Math.random()*phrases.length)];
+      easter.textContent=text;
+      easter.classList.add('show');
+      setTimeout(function(){easter.classList.remove('show')},2200);
+    }
+  });
+})();
+</script>
+</body>
+</html>
