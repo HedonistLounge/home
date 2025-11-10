@@ -7,56 +7,72 @@
 <meta name="description" content="Hedonist Lounge — Real nights in Budapest. Explore events, playlists, and the live soundtrack playing now.">
 <meta name="theme-color" content="#0b0b0c">
 <link rel="icon" type="image/png" href="H.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
 
 <style>
 :root {
-  --bg:#0b0b0c;--fg:#fff;--muted:#a7a7a7;
-  --glow1:#19f0a8;--glow2:#6c48ff;
-  --card-bg:rgba(22,23,26,0.7);--btn-bg:rgba(23,24,26,0.7);
-  --border:rgba(255,255,255,0.1);--border-hover:rgba(255,255,255,0.2);
+  --bg:#0b0b0c;
+  --fg:#fff;
+  --muted:#9b9b9b;
+  --neon1:#19f0a8;
+  --neon2:#6c48ff;
+  --card:#16171a;
+  --btn:#1a1b1e;
+  --border:rgba(255,255,255,.08);
+  --border-hover:rgba(255,255,255,.25);
   --font:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
 }
-*{box-sizing:border-box}html,body{height:100%}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font);position:relative;overflow-x:hidden}
-body::before,body::after{content:"";position:fixed;z-index:-1;filter:blur(80px);opacity:.25}
-body::before{width:500px;height:500px;border-radius:50%;background:radial-gradient(circle at 30% 30%,var(--glow1),transparent 60%);top:-15%;left:-10%;animation:float 20s ease-in-out infinite}
-body::after{width:450px;height:450px;border-radius:50%;background:radial-gradient(circle at 60% 40%,var(--glow2),transparent 60%);bottom:-15%;right:-10%;animation:float 24s ease-in-out infinite reverse}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(25px)}}
-.container{max-width:720px;margin:0 auto;padding:22px;position:relative;z-index:2}
-.header{display:flex;align-items:center;gap:16px;margin:8px 0 18px}
-.logo{width:60px;height:60px;border-radius:14px;overflow:hidden;flex:0 0 60px;box-shadow:0 10px 30px rgba(25,240,168,.25);background:#0d0e10;border:1px solid rgba(255,255,255,.08);transition:transform .3s ease,box-shadow .3s ease}
-.logo:hover{transform:scale(1.05);box-shadow:0 0 25px rgba(25,240,168,.5)}
-.logo img{width:100%;height:100%;object-fit:contain;display:block}
-.title h1{margin:0;font-size:clamp(22px,4vw,32px);font-weight:800}
-.title p{margin:4px 0 0;font-size:14px;color:var(--muted)}
-.card{background:var(--card-bg);border:1px solid var(--border);border-radius:20px;box-shadow:0 24px 70px rgba(0,0,0,.5);overflow:hidden;backdrop-filter:blur(12px);position:relative}
-.card-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 16px;border-bottom:1px solid var(--border)}
-.card-head-title{font-weight:700;letter-spacing:.2px;color:#e8e8e8;font-size:13px;display:flex;align-items:center;gap:8px}
-.dot{width:9px;height:9px;border-radius:50%;background:radial-gradient(circle at 40% 40%,#3cffc3,#00e39a);box-shadow:0 0 12px rgba(25,240,168,.8),0 0 22px rgba(25,240,168,.4);animation:pulse 1.6s ease-in-out infinite}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
-.toggle-btn{background:none;border:1px solid var(--border);color:var(--muted);font-size:13px;border-radius:10px;padding:4px 10px;cursor:pointer;transition:all .2s ease}
-.toggle-btn:hover{color:var(--fg);border-color:var(--border-hover);background:rgba(255,255,255,.05)}
-.player{display:flex;justify-content:center;background:#0e0e10;border:1px solid rgba(255,255,255,.06);border-radius:16px;overflow:hidden;transition:max-height .5s ease,opacity .4s ease}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--fg);font-family:var(--font);overflow-x:hidden;scroll-behavior:smooth}
+canvas#bg{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  z-index:-2;pointer-events:none;background:radial-gradient(circle at 30% 30%,rgba(25,240,168,.05),transparent 60%),radial-gradient(circle at 70% 70%,rgba(108,72,255,.05),transparent 60%),var(--bg);
+}
+.container{max-width:720px;margin:0 auto;padding:24px;position:relative;z-index:2}
+.header{display:flex;align-items:center;gap:16px;margin-bottom:20px}
+.logo{width:65px;height:65px;border-radius:16px;overflow:hidden;box-shadow:0 0 30px rgba(25,240,168,.25);flex-shrink:0;transition:transform .3s ease,box-shadow .3s ease}
+.logo:hover{transform:scale(1.08);box-shadow:0 0 40px rgba(25,240,168,.5)}
+.logo img{width:100%;height:100%;object-fit:contain}
+.title h1{font-size:clamp(22px,4vw,34px);font-weight:800;letter-spacing:.4px;text-shadow:0 0 12px rgba(25,240,168,.3),0 0 18px rgba(108,72,255,.25)}
+.title p{margin-top:4px;color:var(--muted);font-size:14px;letter-spacing:.4px}
+.card{background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.01));border:1px solid var(--border);
+border-radius:22px;box-shadow:0 0 50px rgba(0,0,0,.6),inset 0 0 30px rgba(25,240,168,.03);
+backdrop-filter:blur(14px);overflow:hidden;transition:box-shadow .3s ease,border .3s ease}
+.card:hover{border:1px solid var(--border-hover);box-shadow:0 0 60px rgba(108,72,255,.15),0 0 30px rgba(25,240,168,.1)}
+.card-head{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.08)}
+.card-head-title{font-weight:700;color:#e8e8e8;font-size:13px;display:flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.8px}
+.dot{width:9px;height:9px;border-radius:50%;background:radial-gradient(circle at 40% 40%,#3cffc3,#00e39a);
+box-shadow:0 0 15px rgba(25,240,168,.9);animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.35)}}
+.toggle-btn{background:none;border:1px solid var(--border);color:var(--muted);font-size:13px;border-radius:12px;
+padding:5px 12px;cursor:pointer;transition:all .25s ease;backdrop-filter:blur(10px)}
+.toggle-btn:hover{color:var(--fg);border-color:var(--border-hover);box-shadow:0 0 12px rgba(25,240,168,.4)}
+.player{display:flex;justify-content:center;align-items:center;background:#0e0e10;border-radius:18px;border:1px solid rgba(255,255,255,.05);
+transition:max-height .5s ease,opacity .4s ease;overflow:hidden}
 .player.hidden{max-height:0;opacity:0;pointer-events:none}
-.player-frame{width:420px;height:760px;border:0;display:block;background:#0e0e10;border-radius:12px}
-.section{margin:18px 0}
-.section-title{font-size:16px;font-weight:800;color:#fff;margin:20px 0 12px}
-.list{display:grid;gap:12px}
-.btn{display:flex;align-items:center;gap:14px;padding:16px;border-radius:16px;text-decoration:none;color:var(--fg);background:var(--btn-bg);border:1px solid var(--border);backdrop-filter:blur(12px);transition:all .2s ease}
-.btn:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(0,0,0,.35);border-color:var(--border-hover);background:rgba(30,31,34,.8)}
-.emoji{font-size:18px}
-.txt{display:flex;flex-direction:column}
-.txt strong{font-size:16px;font-weight:700}
+.player-frame{width:100%;max-width:380px;height:480px;border:0;transform:scale(.85);transform-origin:top center}
+.section{margin:26px 0}
+.section-title{font-size:16px;font-weight:800;letter-spacing:.8px;color:#fff;margin:22px 0 14px;text-shadow:0 0 10px rgba(25,240,168,.3)}
+.list{display:grid;gap:14px}
+.btn{display:flex;align-items:center;gap:14px;padding:16px;border-radius:16px;text-decoration:none;color:var(--fg);
+background:var(--btn);border:1px solid var(--border);transition:all .25s ease;backdrop-filter:blur(10px);position:relative;overflow:hidden}
+.btn::before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(25,240,168,.12),rgba(108,72,255,.12),transparent 70%);
+opacity:0;transition:opacity .3s ease}
+.btn:hover::before{opacity:1}
+.btn:hover{transform:translateY(-2px);border-color:var(--border-hover);box-shadow:0 0 25px rgba(25,240,168,.15)}
+.emoji{font-size:19px;z-index:2}
+.txt{display:flex;flex-direction:column;z-index:2}
+.txt strong{font-size:16px;font-weight:700;letter-spacing:.2px}
 .txt span{font-size:13px;color:var(--muted)}
-.hr{height:1px;border:0;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:10px 0}
-.footer{text-align:center;color:var(--muted);font-size:13px;margin:18px 0 6px}
+.hr{height:1px;border:0;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:14px 0}
+.footer{text-align:center;color:var(--muted);font-size:13px;margin:26px 0 8px;letter-spacing:.4px}
+.footer span{color:var(--neon1)}
 </style>
 </head>
 
 <body>
+<canvas id="bg"></canvas>
+
 <div class="container">
   <div class="header">
     <div class="logo"><img src="H.png" alt="Hedonist Logo"></div>
@@ -96,22 +112,62 @@ body::after{width:450px;height:450px;border-radius:50%;background:radial-gradien
 
       <div class="hr"></div>
       <h2 class="section-title">Feedback</h2>
-      <a class="btn" href="mailto:hedonistlounge@hotmail.com" target="_blank"><div class="emoji">💭</div><div class="txt"><strong>Share a Thought</strong><span>We read everything</span></div></a>
+      <a class="btn" href="mailto:hedonistlounge@hotmail.com"><div class="emoji">💭</div><div class="txt"><strong>Share a Thought</strong><span>We read everything</span></div></a>
     </div>
   </div>
 
-  <div class="footer">© Hedonist Lounge — Budapest</div>
+  <div class="footer">© <span>Hedonist Lounge</span> — Budapest</div>
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const player = document.getElementById('player');
-  const toggleBtn = document.getElementById('togglePlayer');
-  toggleBtn.addEventListener('click', () => {
-    const hidden = player.classList.toggle('hidden');
-    toggleBtn.textContent = hidden ? '🎧 Show Player' : '🎧 Hide Player';
+// player toggle
+document.addEventListener('DOMContentLoaded',()=>{
+  const player=document.getElementById('player');
+  const toggleBtn=document.getElementById('togglePlayer');
+  toggleBtn.addEventListener('click',()=>{
+    const hidden=player.classList.toggle('hidden');
+    toggleBtn.textContent=hidden?'🎧 Show Player':'🎧 Hide Player';
   });
 });
+
+// ambient particles
+const canvas=document.getElementById('bg');
+const ctx=canvas.getContext('2d');
+let particles=[];
+let w,h;
+
+function resize(){
+  w=canvas.width=window.innerWidth;
+  h=canvas.height=window.innerHeight;
+  particles=Array.from({length:60},()=>({
+    x:Math.random()*w,
+    y:Math.random()*h,
+    r:Math.random()*2+0.5,
+    dx:(Math.random()-.5)*0.4,
+    dy:(Math.random()-.5)*0.4,
+    c:Math.random()<0.5?'rgba(25,240,168,0.35)':'rgba(108,72,255,0.35)'
+  }));
+}
+resize();
+window.addEventListener('resize',resize);
+
+function draw(){
+  ctx.clearRect(0,0,w,h);
+  for(let p of particles){
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle=p.c;
+    ctx.shadowColor=p.c;
+    ctx.shadowBlur=15;
+    ctx.fill();
+    p.x+=p.dx;
+    p.y+=p.dy;
+    if(p.x<0||p.x>w)p.dx*=-1;
+    if(p.y<0||p.y>h)p.dy*=-1;
+  }
+  requestAnimationFrame(draw);
+}
+draw();
 </script>
 </body>
 </html>
