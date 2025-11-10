@@ -1,77 +1,403 @@
 <!doctype html>
 <html lang="tr">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hedonist Lounge — Home</title>
-<meta name="theme-color" content="#0b0b0c">
-<style>
-:root{--bg:#0b0b0c;--fg:#fff;--muted:#a7a7a7;--panel:#121316;--border:rgba(255,255,255,.1)}
-*{box-sizing:border-box}html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;overflow:hidden}
-.bg{position:fixed;inset:0;z-index:-2;overflow:hidden;background:#0b0b0c}
-.bg::after{content:"";position:absolute;inset:0;background:radial-gradient(1200px 700px at 15% -10%,rgba(25,240,168,.10),transparent),radial-gradient(1000px 600px at 110% 0%,rgba(108,72,255,.08),transparent),linear-gradient(180deg,rgba(0,0,0,.55),rgba(0,0,0,.55))}
-.frameBase{position:absolute;top:50%;left:50%;transform-origin:top left;filter:blur(8px) saturate(1.15) brightness(.8);opacity:.9;border:0;background:#0e0e10}
-.wrap{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
-.panel{width:100%;max-width:560px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,0));border:1px solid var(--border);border-radius:22px;backdrop-filter:blur(6px);box-shadow:0 30px 80px rgba(0,0,0,.55);overflow:hidden}
-.header{display:flex;align-items:center;gap:14px;padding:18px}
-.logo{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-weight:900;background:linear-gradient(135deg,#19f0a8,#00e0ff);color:#0a0a0a;box-shadow:0 10px 30px rgba(25,240,168,.25)}
-.title{margin:0;font-size:clamp(22px,4vw,30px);letter-spacing:.2px}
-.sub{margin:2px 0 0;color:var(--muted);font-size:13px}
-.list{display:grid;gap:12px;padding:16px}
-.btn{display:flex;align-items:center;gap:12px;padding:16px;border-radius:16px;text-decoration:none;color:var(--fg);background:#17181a;border:1px solid var(--border);transition:transform .15s ease,box-shadow .2s ease,border-color .2s ease,background .2s ease}
-.btn:hover{transform:translateY(-1px);box-shadow:0 14px 34px rgba(0,0,0,.35);border-color:rgba(255,255,255,.18);background:#1a1b1e}
-.emoji{font-size:18px;line-height:1}
-.txt{display:flex;flex-direction:column}
-.txt strong{font-size:16px;letter-spacing:.2px}
-.txt span{font-size:12px;color:var(--muted)}
-.hr{height:1px;border:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);margin:6px 0}
-.footer{padding:8px 16px 16px;color:var(--muted);font-size:12px;text-align:center}
-.badge{position:absolute;top:12px;left:12px;z-index:1;padding:8px 10px;border-radius:12px;border:1px solid var(--border);background:rgba(0,0,0,.35);backdrop-filter:blur(6px);font-size:12px;letter-spacing:.16em}
-@media (max-width:520px){.sub{font-size:12px}}
-</style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hedonist Lounge — Home</title>
+    <meta name="theme-color" content="#0b0b0c">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #0b0b0c;
+            --fg: #fff;
+            --muted: #a7a7a7;
+            --card: #131416;
+            --glow1: #19f0a8;
+            --glow2: #6c48ff;
+            --glow3: #00d2ff;
+            --btn: #17181a;
+            --border: rgba(255, 255, 255, 0.1);
+            --font-family: 'Manrope', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            background:
+                radial-gradient(1200px 700px at 15% -10%, rgba(25, 240, 168, 0.08), transparent),
+                radial-gradient(1000px 600px at 110% 0%, rgba(108, 72, 255, 0.07), transparent),
+                var(--bg);
+            color: var(--fg);
+            font-family: var(--font-family);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 560px;
+        }
+
+        .shell {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+        }
+
+        .content-block {
+            position: relative;
+            z-index: 1;
+            padding: 16px;
+        }
+
+        .glow-backdrop {
+            position: absolute;
+            inset: -25% -35% -35% -35%;
+            filter: blur(60px);
+            opacity: 0.35;
+            pointer-events: none;
+        }
+
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            mix-blend-mode: screen;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .glow-orb.orb-green {
+            width: 480px;
+            height: 480px;
+            left: -8%;
+            top: -10%;
+            background: radial-gradient(circle at 30% 30%, var(--glow1), transparent 60%);
+        }
+
+        .glow-orb.orb-purple {
+            width: 400px;
+            height: 400px;
+            right: -10%;
+            top: 0;
+            background: radial-gradient(circle at 60% 40%, var(--glow2), transparent 60%);
+            animation-direction: reverse;
+        }
+
+        .glow-orb.orb-blue {
+            width: 340px;
+            height: 340px;
+            left: 35%;
+            bottom: -10%;
+            background: radial-gradient(circle at 40% 60%, var(--glow3), transparent 60%);
+            animation-duration: 24s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(18px); }
+        }
+
+        .header {
+            position: relative;
+            z-index: 1;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            font-size: 20px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--glow1), var(--glow3));
+            color: #0a0a0a;
+            box-shadow: 0 10px 30px rgba(25, 240, 168, 0.25);
+            flex-shrink: 0;
+        }
+
+        .title {
+            font-size: clamp(24px, 4vw, 30px);
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: .2px;
+        }
+
+        .subtitle {
+            margin: 2px 0 0;
+            color: var(--muted);
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .widget-card {
+            background: var(--card);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            overflow: hidden;
+        }
+
+        .badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0));
+        }
+
+        .badge-text {
+            font-weight: 700;
+            letter-spacing: .2px;
+            color: #dcdcdc;
+            font-size: 12px;
+        }
+
+        .pulse-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 40% 40%, #3cffc3, #00e39a);
+            box-shadow: 0 0 12px rgba(25, 240, 168, 0.8), 0 0 22px rgba(25, 240, 168, 0.4);
+            animation: pulse 1.6s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.25); }
+        }
+
+        .player-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            background: #0e0e10;
+        }
+
+        .player-container > div {
+            transform-origin: top center;
+        }
+
+        .player-iframe {
+            width: 420px;
+            height: 760px;
+            border: 0;
+            display: block;
+            background: #0e0e10;
+        }
+
+        .links-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .link-btn {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px;
+            border-radius: 16px;
+            text-decoration: none;
+            color: var(--fg);
+            background: var(--btn);
+            border: 1px solid var(--border);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .link-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35);
+            border-color: rgba(255, 255, 255, 0.18);
+            background: #1a1b1e;
+        }
+
+        .link-emoji {
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        .link-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .link-text strong {
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: .2px;
+        }
+
+        .link-text span {
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .divider {
+            height: 1px;
+            border: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+            margin: 8px 0;
+        }
+
+        .footer {
+            position: relative;
+            z-index: 1;
+            padding: 10px 18px 20px;
+            color: var(--muted);
+            font-size: 13px;
+            text-align: center;
+        }
+
+        @media (max-width: 520px) {
+            .subtitle {
+                font-size: 13px;
+            }
+            .link-text span {
+                font-size: 12px;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="bg">
-  <div class="badge">NOW PLAYING</div>
-  <iframe id="bgFrame" class="frameBase" src="https://display.soundtrack.io/BLLARJ" title="Now Playing" loading="eager" referrerpolicy="no-referrer" allowfullscreen></iframe>
-</div>
-<main class="wrap">
-  <section class="panel">
-    <header class="header">
-      <div class="logo">♪</div>
-      <div>
-        <h1 class="title">Hedonist Lounge</h1>
-        <p class="sub">Real nights • Budapest</p>
-      </div>
-    </header>
-    <div class="list">
-      <a class="btn" href="https://www.facebook.com/hedonistbudapest2/events" target="_blank"><div class="emoji">🗓️</div><div class="txt"><strong>Events</strong><span>What’s on this week</span></div></a>
-      <div class="hr"></div>
-      <a class="btn" href="https://open.spotify.com/playlist/26tdudnXR3SUfCjyElU09Z?si=iNsLSwXdTMqQRrrr4ZC6Iw" target="_blank"><div class="emoji">☀️</div><div class="txt"><strong>Goood Morning Budapest</strong><span>Smooth sunrise vibes</span></div></a>
-      <a class="btn" href="https://open.spotify.com/playlist/04n8porc6EUwHQ3fr5iN6i?si=ushVdx3OQa2KVB0pgLihfQ" target="_blank"><div class="emoji">🌞</div><div class="txt"><strong>Have a lovely day</strong><span>Daytime groove</span></div></a>
-      <a class="btn" href="https://open.spotify.com/playlist/592sxbGZtkpqE8T3t4ocGL?si=E_U8CaREQh6b4aboeX5CkQ&pi=EBFfo2PvRg2HF" target="_blank"><div class="emoji">🌙</div><div class="txt"><strong>Night is young</strong><span>Dark rhythm</span></div></a>
-      <div class="hr"></div>
-      <a class="btn" href="https://www.facebook.com/hedonistbudapest2" target="_blank"><div class="emoji">📘</div><div class="txt"><strong>Facebook</strong><span>Updates & events</span></div></a>
-      <a class="btn" href="https://www.instagram.com/hedonistbudapest_" target="_blank"><div class="emoji">📸</div><div class="txt"><strong>Instagram</strong><span>Stories & moments</span></div></a>
-    </div>
-    <div class="footer">© Hedonist Lounge — Budapest</div>
-  </section>
-</main>
-<script>
-(function(){
-  var baseW=420, baseH=760;
-  function coverFit(){
-    var f=document.getElementById('bgFrame');
-    var vw=window.innerWidth, vh=window.innerHeight;
-    var scale=Math.max(vw/baseW, vh/baseH);
-    var w=baseW*scale, h=baseH*scale;
-    f.style.width=baseW+"px";
-    f.style.height=baseH+"px";
-    f.style.transform="translate(-50%,-50%) scale("+scale+")";
-  }
-  window.addEventListener('resize', coverFit, {passive:true});
-  window.addEventListener('orientationchange', coverFit, {passive:true});
-  coverFit();
-})();
-</script>
+
+    <main class="container">
+        <section class="shell">
+            
+            <div class="glow-backdrop">
+                <div class="glow-orb orb-green"></div>
+                <div class="glow-orb orb-purple"></div>
+                <div class="glow-orb orb-blue"></div>
+            </div>
+
+            <header class="header">
+                <div class="logo">♪</div>
+                <div>
+                    <h1 class="title">Hedonist Lounge</h1>
+                    <p class="subtitle">Real nights • Budapest</p>
+                </div>
+            </header>
+
+            <div class="content-block">
+                <div class="widget-card">
+                    <div class="player-container">
+                        <div id="playerScale">
+                            <iframe 
+                                class="player-iframe" 
+                                src="https://display.soundtrack.io/BLLARJ" 
+                                allowfullscreen 
+                                loading="eager" 
+                                referrerpolicy="no-referrer" 
+                                title="Now Playing">
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="badge">
+                        <span class="pulse-dot"></span>
+                        <span class="badge-text">NOW PLAYING</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-block">
+                <div class="links-list">
+                    <a class="link-btn" href="https://www.facebook.com/hedonistbudapest2/events" target="_blank">
+                        <div class="link-emoji">🗓️</div>
+                        <div class="link-text">
+                            <strong>Events</strong>
+                            <span>What’s on this week</span>
+                        </div>
+                    </a>
+                    
+                    <div class="divider"></div>
+
+                    <a class="link-btn" href="https://open.spotify.com/playlist/26tdudnXR3SUfCjyElU09Z?si=iNsLSwXdTMqQRrrr4ZC6Iw" target="_blank">
+                        <div class="link-emoji">☀️</div>
+                        <div class="link-text">
+                            <strong>Goood Morning Budapest</strong>
+                            <span>Smooth sunrise vibes</span>
+                        </div>
+                    </a>
+                    <a class="link-btn" href="https://open.spotify.com/playlist/04n8porc6EUwHQ3fr5iN6i?si=ushVdx3OQa2KVB0pgLihfQ" target="_blank">
+                        <div class="link-emoji">🌞</div>
+                        <div class="link-text">
+                            <strong>Have a lovely day</strong>
+                            <span>Daytime groove</span>
+                        </div>
+                    </a>
+                    <a class="link-btn" href="https://open.spotify.com/playlist/592sxbGZtkpqE8T3t4ocGL?si=E_U8CaREQh6b4aboeX5CkQ&pi=EBFfo2PvRg2HF" target="_blank">
+                        <div class="link-emoji">🌙</div>
+                        <div class="link-text">
+                            <strong>Night is young</strong>
+                            <span>Dark rhythm</span>
+                        </div>
+                    </a>
+
+                    <div class="divider"></div>
+
+                    <a class="link-btn" href="https://www.facebook.com/hedonistbudapest2" target="_blank">
+                        <div class="link-emoji">📘</div>
+                        <div class="link-text">
+                            <strong>Facebook</strong>
+                            <span>Updates & events</span>
+                        </div>
+                    </a>
+                    <a class="link-btn" href="https://www.instagram.com/hedonistbudapest_" target="_blank">
+                        <div class="link-emoji">📸</div>
+                        <div class="link-text">
+                            <strong>Instagram</strong>
+                            <span>Stories & moments</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <footer class="footer">
+                © Hedonist Lounge — Budapest
+            </footer>
+
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const BASE_WIDTH = 420;
+            const BASE_HEIGHT = 760;
+            const playerContainer = document.querySelector('.player-container');
+            const playerInner = document.getElementById('playerScale');
+
+            if (!playerContainer || !playerInner) {
+                return;
+            }
+
+            function fitPlayer() {
+                const maxWidth = playerContainer.clientWidth;
+                const maxHeight = Math.min(window.innerHeight * 0.7, 680);
+                const scale = Math.min(maxWidth / BASE_WIDTH, maxHeight / BASE_HEIGHT);
+                playerInner.style.transform = 'scale(' + scale + ')';
+                playerContainer.style.height = (BASE_HEIGHT * scale) + 'px';
+            }
+
+            window.addEventListener('resize', fitPlayer, { passive: true });
+            window.addEventListener('orientationchange', fitPlayer, { passive: true });
+            fitPlayer();
+        });
+    </script>
+
 </body>
 </html>
