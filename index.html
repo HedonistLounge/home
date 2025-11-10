@@ -8,8 +8,6 @@
 <meta name="theme-color" content="#0b0b0c">
 <link rel="icon" type="image/png" href="H.png">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://display.soundtrack.io" crossorigin>
-<link rel="dns-prefetch" href="//display.soundtrack.io">
 <style>
 :root{--bg:#0b0b0c;--fg:#fff;--muted:#9b9b9b;--neon1:#19f0a8;--neon2:#6c48ff;--font:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -32,9 +30,9 @@ body{margin:0;color:var(--fg);font-family:var(--font);background:radial-gradient
 .toggle-btn{background:none;border:1px solid rgba(255,255,255,.08);color:var(--muted);font-size:13px;border-radius:10px;padding:4px 9px;cursor:pointer;transition:all .25s ease;backdrop-filter:blur(8px)}
 .toggle-btn:hover{color:var(--fg);border-color:rgba(255,255,255,.25)}
 
-.player{display:flex;justify-content:center;align-items:center;border:none;background:transparent;box-shadow:none;transition:height .35s ease,opacity .3s ease;overflow:visible;height:220px}
-.player.hidden{height:0;opacity:0;padding:0;margin:0;overflow:hidden}
-.player-frame{width:100%;max-width:260px;height:230px;border:0;transform:scaleX(1.25);transform-origin:center}
+.player{display:flex;justify-content:center;align-items:center;border:none;background:transparent;box-shadow:none;transition:height .35s ease,opacity .3s ease;overflow:hidden;height:220px}
+.player.hidden{height:0;opacity:0;padding:0;margin:0}
+.player-frame{width:100%;max-width:560px;height:210px;border:0}
 
 .section{margin:22px 0}
 .section-title{font-size:16px;font-weight:800;letter-spacing:.8px;color:#fff;margin:18px 0 12px;text-shadow:0 0 8px rgba(25,240,168,.22)}
@@ -69,7 +67,7 @@ body{margin:0;color:var(--fg);font-family:var(--font);background:radial-gradient
     </div>
     <div class="card-body">
       <div id="player" class="player">
-        <iframe class="player-frame" src="https://display.soundtrack.io/BLLARJ" loading="lazy" referrerpolicy="no-referrer"></iframe>
+        <iframe class="player-frame" src="https://display.soundtrack.io/BLLARJ" allowfullscreen loading="eager" referrerpolicy="no-referrer"></iframe>
       </div>
     </div>
   </div>
