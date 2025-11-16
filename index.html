@@ -16,7 +16,7 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{margin:0;color:var(--fg);font-family:var(--font);background:radial-gradient(circle at 15% 25%,rgba(25,240,168,.05),transparent 70%),radial-gradient(circle at 80% 75%,rgba(108,72,255,.06),transparent 70%),var(--bg);background-size:200% 200%;animation:aurora 22s ease-in-out infinite alternate;overflow-x:hidden;position:relative}
 @keyframes aurora{0%{background-position:20% 20%,80% 80%}100%{background-position:70% 40%,30% 90%}}
-.container{max-width:720px;margin:0 auto;padding:24px;position:relative;z-index:2}
+.container{max-width:1040px;margin:0 auto;padding:24px;position:relative;z-index:2}
 .header-link{text-decoration:none;color:inherit;display:block}
 .header{display:flex;align-items:center;gap:16px;margin-bottom:20px}
 .logo{width:60px;height:60px;border-radius:14px;overflow:hidden;box-shadow:0 0 22px rgba(25,240,168,.18);flex-shrink:0;transition:transform .3s ease,box-shadow .3s ease}
@@ -54,11 +54,22 @@ body{margin:0;color:var(--fg);font-family:var(--font);background:radial-gradient
 #easter{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);font-size:22px;font-weight:700;color:var(--fg);text-shadow:0 0 10px var(--neon1),0 0 20px var(--neon2);opacity:0;transition:opacity .4s ease,transform .4s ease;pointer-events:none;z-index:99}
 #easter.show{opacity:1;transform:translate(-50%,-50%) scale(1.1)}
 
-.calendar-wrapper{max-width:1100px;margin:8px 0 28px;padding:10px;background:rgba(9,10,14,.9);border-radius:22px;box-shadow:0 0 26px rgba(25,240,168,.24),0 0 46px rgba(108,72,255,.22)}
-.calendar-wrapper iframe{width:100%;height:700px;border:0;border-radius:14px;background:#000}
+.main-layout{display:flex;gap:28px;align-items:flex-start;margin-top:4px}
+.main-left{flex:1;min-width:0}
+.main-right{flex:0 0 360px;position:sticky;top:80px}
+
+.calendar-head{display:flex;justify-content:space-between;align-items:center;margin:18px 0 10px}
+.calendar-wrapper{max-width:100%;margin:0 0 24px;padding:10px;background:rgba(9,10,14,.9);border-radius:22px;box-shadow:0 0 26px rgba(25,240,168,.24),0 0 46px rgba(108,72,255,.22);transition:max-height .35s ease,opacity .3s ease,padding .3s ease,margin .3s ease}
+.calendar-wrapper iframe{width:100%;height:620px;border:0;border-radius:14px;background:#000}
+.calendar-wrapper.hidden{max-height:0;opacity:0;padding:0;margin:0;border-width:0;overflow:hidden}
+
+@media(max-width:900px){
+  .main-layout{flex-direction:column-reverse}
+  .main-right{position:static;flex:auto;top:auto;width:100%}
+}
 @media(max-width:768px){
-  .calendar-wrapper{padding:6px;margin:4px 0 24px}
-  .calendar-wrapper iframe{height:540px}
+  .calendar-wrapper{padding:6px;margin:0 0 18px}
+  .calendar-wrapper iframe{height:520px}
 }
 </style>
 </head>
@@ -100,79 +111,99 @@ body{margin:0;color:var(--fg);font-family:var(--font);background:radial-gradient
   </div>
 
   <div class="section">
-    <div class="list">
-      <h2 class="section-title">Find Us</h2>
-      <a class="btn" href="https://www.facebook.com/hedonistbudapest2/events" target="_blank" rel="noopener">
-        <div class="emoji">🗓️</div>
-        <div class="txt">
-          <strong>Events</strong>
-          <span>Upcoming nights & tickets</span>
+    <div class="main-layout">
+      <div class="main-left">
+        <div class="list">
+          <h2 class="section-title">Find Us</h2>
+          <a class="btn" href="https://www.facebook.com/hedonistbudapest2/events" target="_blank" rel="noopener">
+            <div class="emoji">🗓️</div>
+            <div class="txt">
+              <strong>Events</strong>
+              <span>Upcoming nights & tickets</span>
+            </div>
+          </a>
+
+          <div class="hr"></div>
+
+          <h2 class="section-title">Playlists</h2>
+          <a class="btn" href="https://open.spotify.com/playlist/26tdudnXR3SUfCjyElU09Z?si=iNsLSwXdTMqQRrrr4ZC6Iw" target="_blank" rel="noopener">
+            <div class="emoji">☀️</div>
+            <div class="txt">
+              <strong>Goood Morning Budapest</strong>
+              <span>Breakfast time • calm & easy</span>
+            </div>
+          </a>
+          <a class="btn" href="https://open.spotify.com/playlist/04n8porc6EUwHQ3fr5iN6i?si=ushVdx3OQa2KVB0pgLihfQ" target="_blank" rel="noopener">
+            <div class="emoji">🌞</div>
+            <div class="txt">
+              <strong>Have a lovely day</strong>
+              <span>Pre-party time • warm & groovy</span>
+            </div>
+          </a>
+          <a class="btn" href="https://open.spotify.com/playlist/592sxbGZtkpqE8T3t4ocGL?si=E_U8CaREQh6b4aboeX5CkQ&pi=EBFfo2PvRg2HF" target="_blank" rel="noopener">
+            <div class="emoji">🌙</div>
+            <div class="txt">
+              <strong>Night is young</strong>
+              <span>Party time • deep & electric</span>
+            </div>
+          </a>
+
+          <div class="hr"></div>
+          <h2 class="section-title">Follow Us</h2>
+          <a class="btn" href="https://www.facebook.com/hedonistbudapest2" target="_blank" rel="noopener">
+            <div class="emoji">📘</div>
+            <div class="txt">
+              <strong>Facebook</strong>
+              <span>Updates & events</span>
+            </div>
+          </a>
+          <a class="btn" href="https://www.instagram.com/hedonistbudapest_" target="_blank" rel="noopener">
+            <div class="emoji">📸</div>
+            <div class="txt">
+              <strong>Instagram</strong>
+              <span>Stories & moments</span>
+            </div>
+          </a>
+
+          <div class="hr"></div>
+          <h2 class="section-title">Feedback</h2>
+          <a class="btn" href="mailto:hedonistlounge@hotmail.com" rel="noopener">
+            <div class="emoji">💭</div>
+            <div class="txt">
+              <strong>Share a Thought</strong>
+              <span>We read everything</span>
+            </div>
+          </a>
         </div>
-      </a>
-
-      <div class="hr"></div>
-
-      <h2 class="section-title">Events Calendar</h2>
-      <div class="calendar-wrapper">
-        <iframe
-          src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Europe%2FBudapest&showPrint=0&src=aGVkb25pc3QxMjM0QGhvdG1haWwuY29t&src=OXA1bmU4amMyNzRtajlzdTRlbThiOGNuYmJpYXNrMTFAaW1wb3J0LmNhbGVuZGFyLmdvb2dsZS5jb20&src=ZW4uaHVuZ2FyaWFuI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23e4c441&color=%23e4c441&color=%230b8043"
-          loading="lazy"
-          frameborder="0"
-          scrolling="no">
-        </iframe>
       </div>
 
-      <div class="hr"></div>
-
-      <h2 class="section-title">Playlists</h2>
-      <a class="btn" href="https://open.spotify.com/playlist/26tdudnXR3SUfCjyElU09Z?si=iNsLSwXdTMqQRrrr4ZC6Iw" target="_blank" rel="noopener">
-        <div class="emoji">☀️</div>
-        <div class="txt">
-          <strong>Goood Morning Budapest</strong>
-          <span>Breakfast time • calm & easy</span>
+      <aside class="main-right">
+        <div class="calendar-head">
+          <h2 class="section-title" style="margin:0">Events Calendar</h2>
+          <button
+            id="toggleCalendar"
+            class="toggle-btn"
+            aria-controls="calendarBlock"
+            aria-expanded="true"
+            onclick="(function(btn){
+              var c=document.getElementById('calendarBlock');
+              if(!c) return;
+              var hidden=c.classList.toggle('hidden');
+              btn.textContent=hidden?'🗓️ Show Calendar':'🗓️ Hide Calendar';
+              btn.setAttribute('aria-expanded', String(!hidden));
+              try{localStorage.setItem('calendarHidden', hidden?'true':'false');}catch(e){}
+            })(this)"
+          >🗓️ Hide Calendar</button>
         </div>
-      </a>
-      <a class="btn" href="https://open.spotify.com/playlist/04n8porc6EUwHQ3fr5iN6i?si=ushVdx3OQa2KVB0pgLihfQ" target="_blank" rel="noopener">
-        <div class="emoji">🌞</div>
-        <div class="txt">
-          <strong>Have a lovely day</strong>
-          <span>Pre-party time • warm & groovy</span>
+        <div id="calendarBlock" class="calendar-wrapper">
+          <iframe
+            src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Europe%2FBudapest&showPrint=0&src=aGVkb25pc3QxMjM0QGhvdG1haWwuY29t&src=OXA1bmU4amMyNzRtajlzdTRlbThiOGNuYmJpYXNrMTFAaW1wb3J0LmNhbGVuZGFyLmdvb2dsZS5jb20&src=ZW4uaHVuZ2FyaWFuI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23e4c441&color=%23e4c441&color=%230b8043"
+            loading="lazy"
+            frameborder="0"
+            scrolling="no">
+          </iframe>
         </div>
-      </a>
-      <a class="btn" href="https://open.spotify.com/playlist/592sxbGZtkpqE8T3t4ocGL?si=E_U8CaREQh6b4aboeX5CkQ&pi=EBFfo2PvRg2HF" target="_blank" rel="noopener">
-        <div class="emoji">🌙</div>
-        <div class="txt">
-          <strong>Night is young</strong>
-          <span>Party time • deep & electric</span>
-        </div>
-      </a>
-
-      <div class="hr"></div>
-      <h2 class="section-title">Follow Us</h2>
-      <a class="btn" href="https://www.facebook.com/hedonistbudapest2" target="_blank" rel="noopener">
-        <div class="emoji">📘</div>
-        <div class="txt">
-          <strong>Facebook</strong>
-          <span>Updates & events</span>
-        </div>
-      </a>
-      <a class="btn" href="https://www.instagram.com/hedonistbudapest_" target="_blank" rel="noopener">
-        <div class="emoji">📸</div>
-        <div class="txt">
-          <strong>Instagram</strong>
-          <span>Stories & moments</span>
-        </div>
-      </a>
-
-      <div class="hr"></div>
-      <h2 class="section-title">Feedback</h2>
-      <a class="btn" href="mailto:hedonistlounge@hotmail.com" rel="noopener">
-        <div class="emoji">💭</div>
-        <div class="txt">
-          <strong>Share a Thought</strong>
-          <span>We read everything</span>
-        </div>
-      </a>
+      </aside>
     </div>
   </div>
 
@@ -193,15 +224,30 @@ body{margin:0;color:var(--fg);font-family:var(--font);background:radial-gradient
 (function(){
   var player=document.getElementById('player');
   var btn=document.getElementById('togglePlayer');
-  if(!player || !btn) return;
-  var isHidden=false;
-  try{ isHidden = (localStorage.getItem('playerHidden')==='true'); }catch(e){}
-  if(isHidden){
-    player.classList.add('hidden');
-    btn.textContent='🎧 Show Player';
-    btn.setAttribute('aria-expanded','false');
-  }else{
-    btn.setAttribute('aria-expanded','true');
+  if(player && btn){
+    var isHidden=false;
+    try{ isHidden = (localStorage.getItem('playerHidden')==='true'); }catch(e){}
+    if(isHidden){
+      player.classList.add('hidden');
+      btn.textContent='🎧 Show Player';
+      btn.setAttribute('aria-expanded','false');
+    }else{
+      btn.setAttribute('aria-expanded','true');
+    }
+  }
+
+  var cal=document.getElementById('calendarBlock');
+  var cbtn=document.getElementById('toggleCalendar');
+  if(cal && cbtn){
+    var calHidden=false;
+    try{ calHidden = (localStorage.getItem('calendarHidden')==='true'); }catch(e){}
+    if(calHidden){
+      cal.classList.add('hidden');
+      cbtn.textContent='🗓️ Show Calendar';
+      cbtn.setAttribute('aria-expanded','false');
+    }else{
+      cbtn.setAttribute('aria-expanded','true');
+    }
   }
 
   var easter=document.getElementById('easter');
