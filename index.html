@@ -53,6 +53,13 @@ body{margin:0;color:var(--fg);font-family:var(--font);background:radial-gradient
 
 #easter{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);font-size:22px;font-weight:700;color:var(--fg);text-shadow:0 0 10px var(--neon1),0 0 20px var(--neon2);opacity:0;transition:opacity .4s ease,transform .4s ease;pointer-events:none;z-index:99}
 #easter.show{opacity:1;transform:translate(-50%,-50%) scale(1.1)}
+
+.calendar-wrapper{max-width:1100px;margin:8px 0 28px;padding:10px;background:rgba(9,10,14,.9);border-radius:22px;box-shadow:0 0 26px rgba(25,240,168,.24),0 0 46px rgba(108,72,255,.22)}
+.calendar-wrapper iframe{width:100%;height:700px;border:0;border-radius:14px;background:#000}
+@media(max-width:768px){
+  .calendar-wrapper{padding:6px;margin:4px 0 24px}
+  .calendar-wrapper iframe{height:540px}
+}
 </style>
 </head>
 <body>
@@ -95,22 +102,77 @@ body{margin:0;color:var(--fg);font-family:var(--font);background:radial-gradient
   <div class="section">
     <div class="list">
       <h2 class="section-title">Find Us</h2>
-      <a class="btn" href="https://www.facebook.com/hedonistbudapest2/events" target="_blank" rel="noopener"><div class="emoji">🗓️</div><div class="txt"><strong>Events</strong><span>Upcoming nights & tickets</span></div></a>
+      <a class="btn" href="https://www.facebook.com/hedonistbudapest2/events" target="_blank" rel="noopener">
+        <div class="emoji">🗓️</div>
+        <div class="txt">
+          <strong>Events</strong>
+          <span>Upcoming nights & tickets</span>
+        </div>
+      </a>
 
       <div class="hr"></div>
+
+      <h2 class="section-title">Events Calendar</h2>
+      <div class="calendar-wrapper">
+        <iframe
+          src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Europe%2FBudapest&showPrint=0&src=aGVkb25pc3QxMjM0QGhvdG1haWwuY29t&src=OXA1bmU4amMyNzRtajlzdTRlbThiOGNuYmJpYXNrMTFAaW1wb3J0LmNhbGVuZGFyLmdvb2dsZS5jb20&src=ZW4uaHVuZ2FyaWFuI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23e4c441&color=%23e4c441&color=%230b8043"
+          loading="lazy"
+          frameborder="0"
+          scrolling="no">
+        </iframe>
+      </div>
+
+      <div class="hr"></div>
+
       <h2 class="section-title">Playlists</h2>
-      <a class="btn" href="https://open.spotify.com/playlist/26tdudnXR3SUfCjyElU09Z?si=iNsLSwXdTMqQRrrr4ZC6Iw" target="_blank" rel="noopener"><div class="emoji">☀️</div><div class="txt"><strong>Goood Morning Budapest</strong><span>Breakfast time • calm & easy</span></div></a>
-      <a class="btn" href="https://open.spotify.com/playlist/04n8porc6EUwHQ3fr5iN6i?si=ushVdx3OQa2KVB0pgLihfQ" target="_blank" rel="noopener"><div class="emoji">🌞</div><div class="txt"><strong>Have a lovely day</strong><span>Pre-party time • warm & groovy</span></div></a>
-      <a class="btn" href="https://open.spotify.com/playlist/592sxbGZtkpqE8T3t4ocGL?si=E_U8CaREQh6b4aboeX5CkQ&pi=EBFfo2PvRg2HF" target="_blank" rel="noopener"><div class="emoji">🌙</div><div class="txt"><strong>Night is young</strong><span>Party time • deep & electric</span></div></a>
+      <a class="btn" href="https://open.spotify.com/playlist/26tdudnXR3SUfCjyElU09Z?si=iNsLSwXdTMqQRrrr4ZC6Iw" target="_blank" rel="noopener">
+        <div class="emoji">☀️</div>
+        <div class="txt">
+          <strong>Goood Morning Budapest</strong>
+          <span>Breakfast time • calm & easy</span>
+        </div>
+      </a>
+      <a class="btn" href="https://open.spotify.com/playlist/04n8porc6EUwHQ3fr5iN6i?si=ushVdx3OQa2KVB0pgLihfQ" target="_blank" rel="noopener">
+        <div class="emoji">🌞</div>
+        <div class="txt">
+          <strong>Have a lovely day</strong>
+          <span>Pre-party time • warm & groovy</span>
+        </div>
+      </a>
+      <a class="btn" href="https://open.spotify.com/playlist/592sxbGZtkpqE8T3t4ocGL?si=E_U8CaREQh6b4aboeX5CkQ&pi=EBFfo2PvRg2HF" target="_blank" rel="noopener">
+        <div class="emoji">🌙</div>
+        <div class="txt">
+          <strong>Night is young</strong>
+          <span>Party time • deep & electric</span>
+        </div>
+      </a>
 
       <div class="hr"></div>
       <h2 class="section-title">Follow Us</h2>
-      <a class="btn" href="https://www.facebook.com/hedonistbudapest2" target="_blank" rel="noopener"><div class="emoji">📘</div><div class="txt"><strong>Facebook</strong><span>Updates & events</span></div></a>
-      <a class="btn" href="https://www.instagram.com/hedonistbudapest_" target="_blank" rel="noopener"><div class="emoji">📸</div><div class="txt"><strong>Instagram</strong><span>Stories & moments</span></div></a>
+      <a class="btn" href="https://www.facebook.com/hedonistbudapest2" target="_blank" rel="noopener">
+        <div class="emoji">📘</div>
+        <div class="txt">
+          <strong>Facebook</strong>
+          <span>Updates & events</span>
+        </div>
+      </a>
+      <a class="btn" href="https://www.instagram.com/hedonistbudapest_" target="_blank" rel="noopener">
+        <div class="emoji">📸</div>
+        <div class="txt">
+          <strong>Instagram</strong>
+          <span>Stories & moments</span>
+        </div>
+      </a>
 
       <div class="hr"></div>
       <h2 class="section-title">Feedback</h2>
-      <a class="btn" href="mailto:hedonistlounge@hotmail.com" rel="noopener"><div class="emoji">💭</div><div class="txt"><strong>Share a Thought</strong><span>We read everything</span></div></a>
+      <a class="btn" href="mailto:hedonistlounge@hotmail.com" rel="noopener">
+        <div class="emoji">💭</div>
+        <div class="txt">
+          <strong>Share a Thought</strong>
+          <span>We read everything</span>
+        </div>
+      </a>
     </div>
   </div>
 
@@ -119,7 +181,6 @@ body{margin:0;color:var(--fg);font-family:var(--font);background:radial-gradient
 
 <div id="easter"></div>
 
-<!-- GA4 (bottom, safe) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-VY0CKKGRDP"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
