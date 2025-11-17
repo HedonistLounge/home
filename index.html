@@ -61,6 +61,26 @@ body{margin:0;color:var(--fg);font-family:var(--font);background:radial-gradient
   .calendar-wrapper{margin:6px 0 20px;padding:6px}
   .calendar-frame{height:520px}
 }
+
+/* event widget + mood + crowd */
+#event-widget{margin:10px 0 20px;padding:12px 14px;border-radius:18px;background:rgba(9,10,14,.95);box-shadow:0 0 18px rgba(25,240,168,.18),0 0 28px rgba(108,72,255,.18);display:flex;flex-direction:column;gap:6px}
+#event-banner{display:flex;flex-direction:column;gap:4px}
+#event-title{font-size:15px;font-weight:700;letter-spacing:.6px}
+#event-datetime{font-size:13px;color:var(--muted)}
+#countdown{font-size:13px;margin-top:4px}
+#crowd-level{font-size:13px;margin-top:2px}
+.theme-comedy{box-shadow:0 0 20px rgba(255,221,85,.5),0 0 34px rgba(255,194,40,.3)}
+.theme-techno{box-shadow:0 0 22px rgba(180,0,255,.6),0 0 40px rgba(108,72,255,.4)}
+.theme-openmic{box-shadow:0 0 20px rgba(85,255,153,.5),0 0 36px rgba(25,240,168,.35)}
+.theme-quiz{box-shadow:0 0 20px rgba(85,170,255,.5),0 0 34px rgba(80,140,255,.35)}
+.theme-generic{box-shadow:0 0 18px rgba(255,255,255,.18),0 0 30px rgba(120,120,120,.3)}
+.crowd-high{text-shadow:0 0 12px rgba(255,80,80,.9)}
+.crowd-medium{text-shadow:0 0 10px rgba(255,200,80,.85)}
+.crowd-low{text-shadow:0 0 10px rgba(80,255,180,.85)}
+body.mood-day .container{box-shadow:0 0 26px rgba(25,240,168,.15)}
+body.mood-night .container{box-shadow:0 0 32px rgba(108,72,255,.25)}
+body.mood-weekend .container{box-shadow:0 0 36px rgba(25,240,168,.3)}
+body.mood-stage .container{box-shadow:0 0 40px rgba(255,80,80,.3)}
 </style>
 </head>
 <body>
@@ -103,6 +123,16 @@ body{margin:0;color:var(--fg);font-family:var(--font);background:radial-gradient
   <div class="section">
     <div class="list">
       <h2 class="section-title">Find Us</h2>
+
+      <div id="event-widget">
+        <div id="event-banner">
+          <div id="event-title">Tonight at Hedonist</div>
+          <div id="event-datetime"></div>
+        </div>
+        <div id="countdown"></div>
+        <div id="crowd-level"></div>
+      </div>
+
       <a class="btn" href="https://www.facebook.com/hedonistbudapest2/events" target="_blank" rel="noopener">
         <div class="emoji">🗓️</div>
         <div class="txt">
@@ -111,7 +141,6 @@ body{margin:0;color:var(--fg);font-family:var(--font);background:radial-gradient
         </div>
       </a>
 
-      <!-- TAKVİM TOGGLE -->
       <button
         id="toggleCalendar"
         class="toggle-btn"
@@ -130,14 +159,13 @@ body{margin:0;color:var(--fg);font-family:var(--font);background:radial-gradient
       <div id="calendarBlock" class="calendar-wrapper hidden">
         <iframe
           class="calendar-frame"
-          src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Europe%2FBudapest&showPrint=0&showTabs=0&showCalendars=0&showTz=0&showTitle=0&src=aGVkb25pc3QxMjM0QGhvdG1haWwuY29t&color=%23e4c441"
+          src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Europe%2FBudapest&showPrint=0&showTabs=0&showCalendars=0&showTz=0&showTitle=0&src=hedonist1234%40hotmail.com&color=%23e4c441"
           loading="lazy"
           frameborder="0"
           scrolling="no">
         </iframe>
       </div>
 
-      <!-- ADD TO CALENDAR BUTONU -->
       <a class="btn" href="https://calendar.google.com/calendar/r?cid=hedonist1234@hotmail.com" target="_blank" rel="noopener">
         <div class="emoji">📅</div>
         <div class="txt">
@@ -204,7 +232,6 @@ body{margin:0;color:var(--fg);font-family:var(--font);background:radial-gradient
 
 <div id="easter"></div>
 
-<!-- GA4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-VY0CKKGRDP"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -239,6 +266,173 @@ body{margin:0;color:var(--fg);font-family:var(--font);background:radial-gradient
       setTimeout(function(){easter.classList.remove('show')},2200);
     }
   });
+})();
+</script>
+
+<script>
+(function(){
+  var CALENDAR_ID="hedonist1234@hotmail.com";
+  var GOOGLE_API_KEY="AIzaSyCTT7Pe7lXIRtyVekGrikxNVi0eqMGMX-U";
+  var LAT=47.4979;
+  var LON=19.0402;
+  var EVENT_TYPE_MAP=[
+    {keyword:"comedy",type:"comedy"},
+    {keyword:"stand up",type:"comedy"},
+    {keyword:"stand-up",type:"comedy"},
+    {keyword:"techno",type:"techno"},
+    {keyword:"dj",type:"techno"},
+    {keyword:"open mic",type:"openmic"},
+    {keyword:"quiz",type:"quiz"}
+  ];
+
+  function detectEventType(title){
+    var t=(title||"").toLowerCase();
+    for(var i=0;i<EVENT_TYPE_MAP.length;i++){
+      if(t.indexOf(EVENT_TYPE_MAP[i].keyword)!==-1) return EVENT_TYPE_MAP[i].type;
+    }
+    return "generic";
+  }
+
+  function applyEventTheme(type){
+    var widget=document.getElementById("event-widget");
+    if(!widget) return;
+    var body=document.body;
+    widget.classList.remove("theme-comedy","theme-techno","theme-openmic","theme-quiz","theme-generic");
+    body.classList.remove("mood-day","mood-night","mood-weekend","mood-stage");
+
+    if(type==="comedy") widget.classList.add("theme-comedy");
+    else if(type==="techno") widget.classList.add("theme-techno");
+    else if(type==="openmic") widget.classList.add("theme-openmic");
+    else if(type==="quiz") widget.classList.add("theme-quiz");
+    else widget.classList.add("theme-generic");
+
+    var now=new Date();
+    var hour=now.getHours();
+    var day=now.getDay();
+
+    if(hour>=18) body.classList.add("mood-night");
+    else body.classList.add("mood-day");
+    if(day===5||day===6) body.classList.add("mood-weekend");
+    if(type==="comedy"||type==="openmic") body.classList.add("mood-stage");
+  }
+
+  function fetchNextEvent(){
+    var nowIso=new Date().toISOString();
+    var url="https://www.googleapis.com/calendar/v3/calendars/"+encodeURIComponent(CALENDAR_ID)+"/events?key="+encodeURIComponent(GOOGLE_API_KEY)+"&timeMin="+encodeURIComponent(nowIso)+"&singleEvents=true&orderBy=startTime&maxResults=1";
+    return fetch(url).then(function(res){
+      return res.json();
+    }).then(function(data){
+      if(!data.items||!data.items.length) return null;
+      return data.items[0];
+    }).catch(function(){
+      return null;
+    });
+  }
+
+  function fetchWeather(){
+    var url="https://api.open-meteo.com/v1/forecast?latitude="+LAT+"&longitude="+LON+"&current_weather=true&hourly=precipitation_probability&forecast_days=1&timezone=Europe/Budapest";
+    return fetch(url).then(function(res){
+      return res.json();
+    }).catch(function(){
+      return null;
+    });
+  }
+
+  function predictCrowdLevel(eventType,startDate,weather){
+    var score=0;
+    var day=startDate.getDay();
+    var hour=startDate.getHours();
+
+    if(eventType==="techno") score+=3;
+    if(eventType==="comedy"||eventType==="openmic"||eventType==="quiz") score+=2;
+    if(day===5||day===6) score+=2;
+    if(hour>=20&&hour<=23) score+=2;
+
+    var rainProb=null;
+    if(weather&&weather.hourly&&weather.hourly.time&&weather.hourly.precipitation_probability){
+      var targetHourStr=startDate.toISOString().slice(0,13);
+      for(var i=0;i<weather.hourly.time.length;i++){
+        if(weather.hourly.time[i].slice(0,13)===targetHourStr){
+          rainProb=weather.hourly.precipitation_probability[i];
+          break;
+        }
+      }
+    }
+
+    if(rainProb!=null){
+      if(rainProb<30) score+=1;
+      else if(rainProb>70) score-=1;
+    }
+
+    if(score>=6) return {label:"Busy night expected tonight.",level:"high"};
+    if(score>=3) return {label:"Moderate crowd expected tonight.",level:"medium"};
+    return {label:"A mellow night expected tonight.",level:"low"};
+  }
+
+  function startCountdown(startDate,title){
+    var countdownEl=document.getElementById("countdown");
+    if(!countdownEl) return;
+    function update(){
+      var now=Date.now();
+      var diff=startDate.getTime()-now;
+      if(diff<=0){
+        countdownEl.textContent="The event has started.";
+        return;
+      }
+      var hours=Math.floor(diff/3600000);
+      var minutes=Math.floor((diff%3600000)/60000);
+      countdownEl.textContent=title+" starts in "+hours+" hours "+minutes+" minutes.";
+    }
+    update();
+    setInterval(update,30000);
+  }
+
+  function initEventWidget(){
+    var widget=document.getElementById("event-widget");
+    if(!widget) return;
+    Promise.all([fetchNextEvent(),fetchWeather()]).then(function(results){
+      var event=results[0];
+      var weather=results[1];
+      if(!event){
+        widget.style.display="none";
+        return;
+      }
+      var titleEl=document.getElementById("event-title");
+      var datetimeEl=document.getElementById("event-datetime");
+      var crowdEl=document.getElementById("crowd-level");
+
+      var title=event.summary||"Hedonist Lounge Event";
+      var startStr=null;
+      if(event.start){
+        if(event.start.dateTime) startStr=event.start.dateTime;
+        else if(event.start.date) startStr=event.start.date+"T20:00:00";
+      }
+      if(!startStr) startStr=new Date().toISOString();
+      var startDate=new Date(startStr);
+
+      if(titleEl) titleEl.textContent=title;
+      if(datetimeEl) datetimeEl.textContent=startDate.toLocaleString("en-GB",{dateStyle:"full",timeStyle:"short"});
+
+      var eventType=detectEventType(title);
+      applyEventTheme(eventType);
+
+      var crowd=predictCrowdLevel(eventType,startDate,weather);
+      if(crowdEl){
+        crowdEl.textContent=crowd.label;
+        crowdEl.classList.remove("crowd-high","crowd-medium","crowd-low");
+        if(crowd.level==="high") crowdEl.classList.add("crowd-high");
+        if(crowd.level==="medium") crowdEl.classList.add("crowd-medium");
+        if(crowd.level==="low") crowdEl.classList.add("crowd-low");
+      }
+
+      startCountdown(startDate,title);
+    }).catch(function(){
+      var widget=document.getElementById("event-widget");
+      if(widget) widget.style.display="none";
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded",initEventWidget);
 })();
 </script>
 </body>
