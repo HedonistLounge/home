@@ -62,7 +62,7 @@ body{margin:0;color:var(--fg);font-family:var(--font);background:radial-gradient
   .calendar-frame{height:520px}
 }
 
-/* event widget + mood + crowd */
+/* Event widget + crowd */
 #event-widget{margin:10px 0 20px;padding:12px 14px;border-radius:18px;background:rgba(9,10,14,.95);box-shadow:0 0 18px rgba(25,240,168,.18),0 0 28px rgba(108,72,255,.18);display:flex;flex-direction:column;gap:6px}
 #event-banner{display:flex;flex-direction:column;gap:4px}
 #event-title{font-size:15px;font-weight:700;letter-spacing:.6px}
@@ -77,10 +77,70 @@ body{margin:0;color:var(--fg);font-family:var(--font);background:radial-gradient
 .crowd-high{text-shadow:0 0 12px rgba(255,80,80,.9)}
 .crowd-medium{text-shadow:0 0 10px rgba(255,200,80,.85)}
 .crowd-low{text-shadow:0 0 10px rgba(80,255,180,.85)}
-body.mood-day .container{box-shadow:0 0 26px rgba(25,240,168,.15)}
-body.mood-night .container{box-shadow:0 0 32px rgba(108,72,255,.25)}
-body.mood-weekend .container{box-shadow:0 0 36px rgba(25,240,168,.3)}
-body.mood-stage .container{box-shadow:0 0 40px rgba(255,80,80,.3)}
+
+/* Ambient moods: time + weather + event synergy */
+body.afterhours .container{
+  box-shadow:0 0 40px rgba(160,70,255,.32),0 0 70px rgba(110,50,200,.28);
+}
+body.golden .container{
+  box-shadow:0 0 38px rgba(255,210,120,.32),0 0 60px rgba(255,180,80,.26);
+}
+body.rainy .container{
+  box-shadow:0 0 38px rgba(80,150,255,.32),0 0 60px rgba(60,110,255,.26);
+}
+body.heat-wave .container{
+  box-shadow:0 0 42px rgba(255,120,80,.34),0 0 70px rgba(255,70,70,.32);
+}
+body.crisp-night .container{
+  box-shadow:0 0 40px rgba(140,220,255,.32),0 0 70px rgba(70,150,255,.28);
+}
+body.windy .container{
+  border-radius:22px;
+}
+
+/* weekend pulse */
+body.weekend-pulse .container{
+  animation:weekendPulse 3.5s ease-in-out infinite;
+}
+@keyframes weekendPulse{
+  0%{box-shadow:0 0 28px rgba(25,240,168,.26)}
+  50%{box-shadow:0 0 44px rgba(108,72,255,.38)}
+  100%{box-shadow:0 0 28px rgba(25,240,168,.26)}
+}
+
+/* event moods */
+body.mood-techno .container{
+  border-radius:22px;
+  box-shadow:0 0 40px rgba(150,70,255,.35),0 0 70px rgba(108,72,255,.35);
+}
+body.mood-comedy .container{
+  box-shadow:0 0 34px rgba(255,220,120,.32),0 0 60px rgba(255,200,100,.3);
+}
+body.mood-quiz .container{
+  box-shadow:0 0 34px rgba(120,230,200,.32),0 0 60px rgba(70,200,170,.3);
+}
+body.mood-openmic .container{
+  box-shadow:0 0 38px rgba(255,150,120,.34),0 0 64px rgba(255,110,90,.3);
+}
+
+/* synergy extras */
+body.techno-charge .container{
+  animation:technoPulse 2.8s ease-in-out infinite;
+}
+@keyframes technoPulse{
+  0%{box-shadow:0 0 28px rgba(150,70,255,.4)}
+  50%{box-shadow:0 0 52px rgba(108,72,255,.6)}
+  100%{box-shadow:0 0 28px rgba(150,70,255,.4)}
+}
+body.cozy-inside .container{
+  background:radial-gradient(circle at 10% 0%,rgba(255,210,140,.2),transparent 55%),radial-gradient(circle at 100% 100%,rgba(80,140,255,.25),transparent 60%),var(--bg);
+}
+body.focus-golden .container{
+  background:radial-gradient(circle at 0% 50%,rgba(255,210,140,.15),transparent 60%),var(--bg);
+}
+body.stage-glow .container{
+  box-shadow:0 0 40px rgba(255,90,90,.35),0 0 70px rgba(255,40,70,.35);
+}
 </style>
 </head>
 <body>
@@ -296,24 +356,12 @@ body.mood-stage .container{box-shadow:0 0 40px rgba(255,80,80,.3)}
   function applyEventTheme(type){
     var widget=document.getElementById("event-widget");
     if(!widget) return;
-    var body=document.body;
     widget.classList.remove("theme-comedy","theme-techno","theme-openmic","theme-quiz","theme-generic");
-    body.classList.remove("mood-day","mood-night","mood-weekend","mood-stage");
-
     if(type==="comedy") widget.classList.add("theme-comedy");
     else if(type==="techno") widget.classList.add("theme-techno");
     else if(type==="openmic") widget.classList.add("theme-openmic");
     else if(type==="quiz") widget.classList.add("theme-quiz");
     else widget.classList.add("theme-generic");
-
-    var now=new Date();
-    var hour=now.getHours();
-    var day=now.getDay();
-
-    if(hour>=18) body.classList.add("mood-night");
-    else body.classList.add("mood-day");
-    if(day===5||day===6) body.classList.add("mood-weekend");
-    if(type==="comedy"||type==="openmic") body.classList.add("mood-stage");
   }
 
   function fetchNextEvent(){
@@ -330,7 +378,7 @@ body.mood-stage .container{box-shadow:0 0 40px rgba(255,80,80,.3)}
   }
 
   function fetchWeather(){
-    var url="https://api.open-meteo.com/v1/forecast?latitude="+LAT+"&longitude="+LON+"&current_weather=true&hourly=precipitation_probability&forecast_days=1&timezone=Europe/Budapest";
+    var url="https://api.open-meteo.com/v1/forecast?latitude="+LAT+"&longitude="+LON+"&current_weather=true&timezone=Europe/Budapest";
     return fetch(url).then(function(res){
       return res.json();
     }).catch(function(){
@@ -348,25 +396,93 @@ body.mood-stage .container{box-shadow:0 0 40px rgba(255,80,80,.3)}
     if(day===5||day===6) score+=2;
     if(hour>=20&&hour<=23) score+=2;
 
-    var rainProb=null;
-    if(weather&&weather.hourly&&weather.hourly.time&&weather.hourly.precipitation_probability){
-      var targetHourStr=startDate.toISOString().slice(0,13);
-      for(var i=0;i<weather.hourly.time.length;i++){
-        if(weather.hourly.time[i].slice(0,13)===targetHourStr){
-          rainProb=weather.hourly.precipitation_probability[i];
-          break;
-        }
-      }
+    var temp=null;
+    if(weather && weather.current_weather){
+      temp=weather.current_weather.temperature;
     }
-
-    if(rainProb!=null){
-      if(rainProb<30) score+=1;
-      else if(rainProb>70) score-=1;
+    if(temp!=null){
+      if(temp>=27) score+=1;
+      else if(temp<=3) score-=1;
     }
 
     if(score>=6) return {label:"Busy night expected.",level:"high"};
     if(score>=3) return {label:"Moderate crowd expected.",level:"medium"};
     return {label:"Mellow night expected.",level:"low"};
+  }
+
+  function computeAmbientClasses(eventType,startDate,weather){
+    var classes=[];
+    var body=document.body;
+    var now=new Date();
+    var hour=now.getHours();
+    var day=now.getDay();
+
+    /* time-based */
+    if(hour>=0 && hour<5) classes.push("afterhours");
+    if(hour>=16 && hour<18){
+      var minutes=now.getMinutes();
+      if(hour===16 && minutes>=30 || hour===17){
+        classes.push("golden");
+      }
+    }
+    if(day===5 || day===6) classes.push("weekend-pulse");
+
+    /* weather-based */
+    var temp=null, code=null, wind=null;
+    if(weather && weather.current_weather){
+      temp=weather.current_weather.temperature;
+      code=weather.current_weather.weathercode;
+      wind=weather.current_weather.windspeed;
+    }
+    if(code!=null){
+      if((code>=51 && code<=67) || (code>=80 && code<=82) || (code>=95 && code<=99)){
+        classes.push("rainy");
+      }
+    }
+    if(temp!=null){
+      if(temp>=27) classes.push("heat-wave");
+      else if(temp<=5) classes.push("crisp-night");
+    }
+    if(wind!=null && wind>=35){
+      classes.push("windy");
+    }
+
+    /* event-type moods */
+    if(eventType==="techno"){
+      classes.push("mood-techno");
+      if(classes.indexOf("afterhours")!==-1 || classes.indexOf("weekend-pulse")!==-1){
+        classes.push("techno-charge");
+      }
+    }else if(eventType==="comedy"){
+      classes.push("mood-comedy");
+      if(classes.indexOf("rainy")!==-1){
+        classes.push("cozy-inside");
+      }
+    }else if(eventType==="quiz"){
+      classes.push("mood-quiz");
+      if(classes.indexOf("golden")!==-1){
+        classes.push("focus-golden");
+      }
+    }else if(eventType==="openmic"){
+      classes.push("mood-openmic","stage-glow");
+    }
+
+    return classes;
+  }
+
+  function applyAmbientMood(classes){
+    var body=document.body;
+    var all=[
+      "afterhours","golden","weekend-pulse","rainy","heat-wave","crisp-night","windy",
+      "mood-techno","mood-comedy","mood-quiz","mood-openmic",
+      "techno-charge","cozy-inside","focus-golden","stage-glow"
+    ];
+    for(var i=0;i<all.length;i++){
+      body.classList.remove(all[i]);
+    }
+    for(var j=0;j<classes.length;j++){
+      body.classList.add(classes[j]);
+    }
   }
 
   function startCountdown(startDate,title){
@@ -424,6 +540,9 @@ body.mood-stage .container{box-shadow:0 0 40px rgba(255,80,80,.3)}
         if(crowd.level==="medium") crowdEl.classList.add("crowd-medium");
         if(crowd.level==="low") crowdEl.classList.add("crowd-low");
       }
+
+      var ambientClasses=computeAmbientClasses(eventType,startDate,weather);
+      applyAmbientMood(ambientClasses);
 
       startCountdown(startDate,title);
     }).catch(function(){
