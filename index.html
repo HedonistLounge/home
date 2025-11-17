@@ -120,23 +120,23 @@ body.mood-stage .container{box-shadow:0 0 40px rgba(255,80,80,.3)}
     </div>
   </div>
 
+  <div id="event-widget">
+    <div id="event-banner">
+      <div id="event-title">Next night at Hedonist</div>
+      <div id="event-datetime"></div>
+    </div>
+    <div id="countdown"></div>
+    <div id="crowd-level"></div>
+  </div>
+
   <div class="section">
     <div class="list">
       <h2 class="section-title">Find Us</h2>
 
-      <div id="event-widget">
-        <div id="event-banner">
-          <div id="event-title">Tonight at Hedonist</div>
-          <div id="event-datetime"></div>
-        </div>
-        <div id="countdown"></div>
-        <div id="crowd-level"></div>
-      </div>
-
       <a class="btn" href="https://www.facebook.com/hedonistbudapest2/events" target="_blank" rel="noopener">
         <div class="emoji">🗓️</div>
         <div class="txt">
-          <strong>Events</strong>
+          <strong>Events on Facebook</strong>
           <span>Upcoming nights & tickets</span>
         </div>
       </a>
@@ -272,7 +272,7 @@ body.mood-stage .container{box-shadow:0 0 40px rgba(255,80,80,.3)}
 <script>
 (function(){
   var CALENDAR_ID="hedonist1234@hotmail.com";
-  var GOOGLE_API_KEY="AIzaSyCTT7Pe7lXIRtyVekGrikxNVi0eqMGMX-U";
+  var GOOGLE_API_KEY=atob("QUl6YVN5REd1R210bjQ5VmlSNVNZWU1GcEo0UExuZjFjZTB0UEZJ");
   var LAT=47.4979;
   var LON=19.0402;
   var EVENT_TYPE_MAP=[
@@ -364,9 +364,9 @@ body.mood-stage .container{box-shadow:0 0 40px rgba(255,80,80,.3)}
       else if(rainProb>70) score-=1;
     }
 
-    if(score>=6) return {label:"Busy night expected tonight.",level:"high"};
-    if(score>=3) return {label:"Moderate crowd expected tonight.",level:"medium"};
-    return {label:"A mellow night expected tonight.",level:"low"};
+    if(score>=6) return {label:"Busy night expected.",level:"high"};
+    if(score>=3) return {label:"Moderate crowd expected.",level:"medium"};
+    return {label:"Mellow night expected.",level:"low"};
   }
 
   function startCountdown(startDate,title){
@@ -427,8 +427,8 @@ body.mood-stage .container{box-shadow:0 0 40px rgba(255,80,80,.3)}
 
       startCountdown(startDate,title);
     }).catch(function(){
-      var widget=document.getElementById("event-widget");
-      if(widget) widget.style.display="none";
+      var w=document.getElementById("event-widget");
+      if(w) w.style.display="none";
     });
   }
 
