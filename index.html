@@ -8,9 +8,11 @@
 <meta name="theme-color" content="#0b0b0c">
 <link rel="icon" type="image/png" href="H.png">
 <link rel="preload" as="image" href="H.png" imagesrcset="H.png 1x">
-<link rel="preconnect" href="https://display.soundtrack.io" crossorigin>
-<link rel="dns-prefetch" href="//display.soundtrack.io">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+
+<!-- Basic Content Security Policy to reduce XSS/embedding risks -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; script-src 'self' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self' https://www.googleapis.com https://api.open-meteo.com https://www.google-analytics.com; frame-src https://display.soundtrack.io https://calendar.google.com; child-src https://display.soundtrack.io https://calendar.google.com;">
+
 <style>
 :root{--bg:#0b0b0c;--fg:#fff;--muted:#9b9b9b;--neon1:#19f0a8;--neon2:#6c48ff;--font:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -147,7 +149,7 @@ body.stage-glow .container{
 <div class="container">
   <a href="#" class="header-link" aria-label="Hedonist Lounge — Home">
     <div class="header">
-      <div class="logo"><img src="H.png" alt="Hedonist Lounge logo"></div>
+      <div class="logo"><img src="H.png" alt="Hedonist Lounge logo" loading="lazy"></div>
       <div class="title">
         <h1>Hedonist Lounge</h1>
         <p>Real nights • Budapest</p>
@@ -193,7 +195,7 @@ body.stage-glow .container{
     <div class="list">
       <h2 class="section-title">Find Us</h2>
 
-      <a class="btn" href="https://www.facebook.com/hedonistbudapest2/events" target="_blank" rel="noopener">
+      <a class="btn" href="https://www.facebook.com/hedonistbudapest2/events" target="_blank" rel="noopener noreferrer">
         <div class="emoji">🗓️</div>
         <div class="txt">
           <strong>Events on Facebook</strong>
@@ -226,7 +228,7 @@ body.stage-glow .container{
         </iframe>
       </div>
 
-      <a class="btn" href="https://calendar.google.com/calendar/r?cid=hedonist1234@hotmail.com" target="_blank" rel="noopener">
+      <a class="btn" href="https://calendar.google.com/calendar/r?cid=hedonist1234@hotmail.com" target="_blank" rel="noopener noreferrer">
         <div class="emoji">📅</div>
         <div class="txt">
           <strong>Add to Calendar</strong>
@@ -236,21 +238,21 @@ body.stage-glow .container{
 
       <div class="hr"></div>
       <h2 class="section-title">Playlists</h2>
-      <a class="btn" href="https://open.spotify.com/playlist/26tdudnXR3SUfCjyElU09Z?si=iNsLSwXdTMqQRrrr4ZC6Iw" target="_blank" rel="noopener">
+      <a class="btn" href="https://open.spotify.com/playlist/26tdudnXR3SUfCjyElU09Z?si=iNsLSwXdTMqQRrrr4ZC6Iw" target="_blank" rel="noopener noreferrer">
         <div class="emoji">☀️</div>
         <div class="txt">
           <strong>Goood Morning Budapest</strong>
           <span>Breakfast time • calm & easy</span>
         </div>
       </a>
-      <a class="btn" href="https://open.spotify.com/playlist/04n8porc6EUwHQ3fr5iN6i?si=ushVdx3OQa2KVB0pgLihfQ" target="_blank" rel="noopener">
+      <a class="btn" href="https://open.spotify.com/playlist/04n8porc6EUwHQ3fr5iN6i?si=ushVdx3OQa2KVB0pgLihfQ" target="_blank" rel="noopener noreferrer">
         <div class="emoji">🌞</div>
         <div class="txt">
           <strong>Have a lovely day</strong>
           <span>Pre-party time • warm & groovy</span>
         </div>
       </a>
-      <a class="btn" href="https://open.spotify.com/playlist/592sxbGZtkpqE8T3t4ocGL?si=E_U8CaREQh6b4aboeX5CkQ&pi=EBFfo2PvRg2HF" target="_blank" rel="noopener">
+      <a class="btn" href="https://open.spotify.com/playlist/592sxbGZtkpqE8T3t4ocGL?si=E_U8CaREQh6b4aboeX5CkQ&pi=EBFfo2PvRg2HF" target="_blank" rel="noopener noreferrer">
         <div class="emoji">🌙</div>
         <div class="txt">
           <strong>Night is young</strong>
@@ -260,14 +262,14 @@ body.stage-glow .container{
 
       <div class="hr"></div>
       <h2 class="section-title">Follow Us</h2>
-      <a class="btn" href="https://www.facebook.com/hedonistbudapest2" target="_blank" rel="noopener">
+      <a class="btn" href="https://www.facebook.com/hedonistbudapest2" target="_blank" rel="noopener noreferrer">
         <div class="emoji">📘</div>
         <div class="txt">
           <strong>Facebook</strong>
           <span>Updates & events</span>
         </div>
       </a>
-      <a class="btn" href="https://www.instagram.com/hedonistbudapest_" target="_blank" rel="noopener">
+      <a class="btn" href="https://www.instagram.com/hedonistbudapest_" target="_blank" rel="noopener noreferrer">
         <div class="emoji">📸</div>
         <div class="txt">
           <strong>Instagram</strong>
@@ -277,7 +279,7 @@ body.stage-glow .container{
 
       <div class="hr"></div>
       <h2 class="section-title">Feedback</h2>
-      <a class="btn" href="mailto:hedonistlounge@hotmail.com" rel="noopener">
+      <a class="btn" href="mailto:hedonistlounge@hotmail.com" rel="noopener noreferrer">
         <div class="emoji">💭</div>
         <div class="txt">
           <strong>Share a Thought</strong>
@@ -412,12 +414,10 @@ body.stage-glow .container{
 
   function computeAmbientClasses(eventType,startDate,weather){
     var classes=[];
-    var body=document.body;
     var now=new Date();
     var hour=now.getHours();
     var day=now.getDay();
 
-    /* time-based */
     if(hour>=0 && hour<5) classes.push("afterhours");
     if(hour>=16 && hour<18){
       var minutes=now.getMinutes();
@@ -427,7 +427,6 @@ body.stage-glow .container{
     }
     if(day===5 || day===6) classes.push("weekend-pulse");
 
-    /* weather-based */
     var temp=null, code=null, wind=null;
     if(weather && weather.current_weather){
       temp=weather.current_weather.temperature;
@@ -447,7 +446,6 @@ body.stage-glow .container{
       classes.push("windy");
     }
 
-    /* event-type moods */
     if(eventType==="techno"){
       classes.push("mood-techno");
       if(classes.indexOf("afterhours")!==-1 || classes.indexOf("weekend-pulse")!==-1){
