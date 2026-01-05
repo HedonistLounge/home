@@ -3,206 +3,554 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hedonist Lounge — Budapest</title>
-<meta name="description" content="Hedonist Lounge — Real nights in Budapest. Events, playlists, and the soundtrack playing now.">
+<title>Hedonist Lounge — Home</title>
+<meta name="description" content="Hedonist Lounge — Real nights in Budapest. Explore events, playlists, and the live soundtrack playing now.">
 <meta name="theme-color" content="#0b0b0c">
 <link rel="icon" type="image/png" href="H.png">
-<link rel="preload" as="image" href="H.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="H.png" imagesrcset="H.png 1x">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
-<meta property="og:title" content="Hedonist Lounge — Budapest">
-<meta property="og:description" content="Real nights in Budapest. Events, playlists, and the soundtrack playing now.">
-<meta property="og:type" content="website">
-<meta property="og:image" content="H.png">
+
+<!-- Basic Content Security Policy to reduce XSS/embedding risks -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; script-src 'self' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self' https://www.googleapis.com https://api.open-meteo.com https://www.google-analytics.com; frame-src https://display.soundtrack.io https://calendar.google.com; child-src https://display.soundtrack.io https://calendar.google.com;">
-<link rel="stylesheet" href="style.css">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-VY0CKKGRDP"></script>
-<script defer src="script.js"></script>
+
+<style>
+:root{--bg:#0b0b0c;--fg:#fff;--muted:#9b9b9b;--neon1:#19f0a8;--neon2:#6c48ff;--font:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{margin:0;color:var(--fg);font-family:var(--font);background:radial-gradient(circle at 15% 25%,rgba(25,240,168,.05),transparent 70%),radial-gradient(circle at 80% 75%,rgba(108,72,255,.06),transparent 70%),var(--bg);background-size:200% 200%;animation:aurora 22s ease-in-out infinite alternate;overflow-x:hidden;position:relative}
+@keyframes aurora{0%{background-position:20% 20%,80% 80%}100%{background-position:70% 40%,30% 90%}}
+.container{max-width:720px;margin:0 auto;padding:24px;position:relative;z-index:2}
+.header-link{text-decoration:none;color:inherit;display:block}
+.header{display:flex;align-items:center;gap:16px;margin-bottom:20px}
+.logo{width:60px;height:60px;border-radius:14px;overflow:hidden;box-shadow:0 0 22px rgba(25,240,168,.18);flex-shrink:0;transition:transform .3s ease,box-shadow .3s ease}
+.logo:hover{transform:scale(1.06);box-shadow:0 0 28px rgba(25,240,168,.32)}
+.logo img{width:100%;height:100%;object-fit:contain}
+.title h1{font-size:clamp(22px,4vw,34px);font-weight:800;letter-spacing:.4px;text-shadow:0 0 10px rgba(25,240,168,.22),0 0 14px rgba(108,72,255,.18)}
+.title p{margin-top:4px;color:var(--muted);font-size:14px;letter-spacing:.4px}
+
+.card{background:transparent;border:none;box-shadow:none;backdrop-filter:none;overflow:hidden;margin-bottom:20px}
+.card-head{display:flex;justify-content:space-between;align-items:center;padding:6px 4px 10px}
+.card-head-title{font-weight:700;color:#e8e8e8;font-size:13px;display:flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.8px}
+.dot{width:9px;height:9px;border-radius:50%;background:radial-gradient(circle at 40% 40%,#3cffc3,#00e39a);box-shadow:0 0 10px rgba(25,240,168,.72);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+.toggle-btn{background:none;border:1px solid rgba(255,255,255,.08);color:var(--muted);font-size:13px;border-radius:10px;padding:4px 9px;cursor:pointer;transition:all .25s ease;backdrop-filter:blur(8px)}
+.toggle-btn:hover{color:var(--fg);border-color:rgba(255,255,255,.25);box-shadow:0 0 16px rgba(25,240,168,.25),0 0 26px rgba(108,72,255,.2)}
+
+.player{display:flex;justify-content:center;align-items:center;border:none;background:transparent;box-shadow:none;transition:height .35s ease,opacity .3s ease;overflow:hidden;height:220px}
+.player.hidden{height:0;opacity:0;padding:0;margin:0}
+.player-frame{width:100%;max-width:560px;height:210px;border:0;transform:translateZ(0)}
+
+.section{margin:22px 0}
+.section-title{font-size:16px;font-weight:800;letter-spacing:.8px;color:#fff;margin:18px 0 12px;text-shadow:0 0 8px rgba(25,240,168,.22)}
+.list{display:grid;gap:12px}
+.btn{display:flex;align-items:center;gap:12px;padding:14px;border-radius:14px;text-decoration:none;color:var(--fg);background:rgba(26,27,30,.7);border:1px solid rgba(255,255,255,.08);transition:all .25s ease;backdrop-filter:blur(8px);position:relative;overflow:hidden}
+.btn:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.25);box-shadow:0 0 16px rgba(25,240,168,.25),0 0 26px rgba(108,72,255,.2)}
+.emoji{font-size:18px}
+.txt{display:flex;flex-direction:column}
+.txt strong{font-size:16px;font-weight:700}
+.txt span{font-size:13px;color:var(--muted)}
+.hr{height:1px;border:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);margin:12px 0}
+.footer{text-align:center;color:var(--muted);font-size:13px;margin:22px 0 8px;letter-spacing:.4px}
+.footer span{color:var(--neon1)}
+.footer[aria-label]{display:block}
+
+#easter{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);font-size:22px;font-weight:700;color:var(--fg);text-shadow:0 0 10px var(--neon1),0 0 20px var(--neon2);opacity:0;transition:opacity .4s ease,transform .4s ease;pointer-events:none;z-index:99}
+#easter.show{opacity:1;transform:translate(-50%,-50%) scale(1.1)}
+
+.calendar-wrapper{margin:8px 0 24px;padding:8px;background:rgba(9,10,14,.9);border-radius:18px;box-shadow:0 0 22px rgba(25,240,168,.22),0 0 38px rgba(108,72,255,.2);transition:opacity .25s ease,transform .25s ease}
+.calendar-wrapper.hidden{display:none}
+.calendar-frame{width:100%;height:560px;border:0;border-radius:12px;background:#000}
+@media(max-width:768px){
+  .calendar-wrapper{margin:6px 0 20px;padding:6px}
+  .calendar-frame{height:520px}
+}
+
+/* Event widget + crowd */
+#event-widget{margin:10px 0 20px;padding:12px 14px;border-radius:18px;background:rgba(9,10,14,.95);box-shadow:0 0 18px rgba(25,240,168,.18),0 0 28px rgba(108,72,255,.18);display:flex;flex-direction:column;gap:6px}
+#event-banner{display:flex;flex-direction:column;gap:4px}
+#event-title{font-size:15px;font-weight:700;letter-spacing:.6px}
+#event-datetime{font-size:13px;color:var(--muted)}
+#countdown{font-size:13px;margin-top:4px}
+#crowd-level{font-size:13px;margin-top:2px}
+.theme-comedy{box-shadow:0 0 20px rgba(255,221,85,.5),0 0 34px rgba(255,194,40,.3)}
+.theme-techno{box-shadow:0 0 22px rgba(180,0,255,.6),0 0 40px rgba(108,72,255,.4)}
+.theme-openmic{box-shadow:0 0 20px rgba(85,255,153,.5),0 0 36px rgba(25,240,168,.35)}
+.theme-quiz{box-shadow:0 0 20px rgba(85,170,255,.5),0 0 34px rgba(80,140,255,.35)}
+.theme-generic{box-shadow:0 0 18px rgba(255,255,255,.18),0 0 30px rgba(120,120,120,.3)}
+.crowd-high{text-shadow:0 0 12px rgba(255,80,80,.9)}
+.crowd-medium{text-shadow:0 0 10px rgba(255,200,80,.85)}
+.crowd-low{text-shadow:0 0 10px rgba(80,255,180,.85)}
+
+/* Ambient moods: time + weather + event synergy */
+body.afterhours .container{
+  box-shadow:0 0 40px rgba(160,70,255,.32),0 0 70px rgba(110,50,200,.28);
+}
+body.golden .container{
+  box-shadow:0 0 38px rgba(255,210,120,.32),0 0 60px rgba(255,180,80,.26);
+}
+body.rainy .container{
+  box-shadow:0 0 38px rgba(80,150,255,.32),0 0 60px rgba(60,110,255,.26);
+}
+body.heat-wave .container{
+  box-shadow:0 0 42px rgba(255,120,80,.34),0 0 70px rgba(255,70,70,.32);
+}
+body.crisp-night .container{
+  box-shadow:0 0 40px rgba(140,220,255,.32),0 0 70px rgba(70,150,255,.28);
+}
+body.windy .container{
+  border-radius:22px;
+}
+
+/* weekend pulse */
+body.weekend-pulse .container{
+  animation:weekendPulse 3.5s ease-in-out infinite;
+}
+@keyframes weekendPulse{
+  0%{box-shadow:0 0 28px rgba(25,240,168,.26)}
+  50%{box-shadow:0 0 44px rgba(108,72,255,.38)}
+  100%{box-shadow:0 0 28px rgba(25,240,168,.26)}
+}
+
+/* event moods */
+body.mood-techno .container{
+  border-radius:22px;
+  box-shadow:0 0 40px rgba(150,70,255,.35),0 0 70px rgba(108,72,255,.35);
+}
+body.mood-comedy .container{
+  box-shadow:0 0 34px rgba(255,220,120,.32),0 0 60px rgba(255,200,100,.3);
+}
+body.mood-quiz .container{
+  box-shadow:0 0 34px rgba(120,230,200,.32),0 0 60px rgba(70,200,170,.3);
+}
+body.mood-openmic .container{
+  box-shadow:0 0 38px rgba(255,150,120,.34),0 0 64px rgba(255,110,90,.3);
+}
+
+/* synergy extras */
+body.techno-charge .container{
+  animation:technoPulse 2.8s ease-in-out infinite;
+}
+@keyframes technoPulse{
+  0%{box-shadow:0 0 28px rgba(150,70,255,.4)}
+  50%{box-shadow:0 0 52px rgba(108,72,255,.6)}
+  100%{box-shadow:0 0 28px rgba(150,70,255,.4)}
+}
+body.cozy-inside .container{
+  background:radial-gradient(circle at 10% 0%,rgba(255,210,140,.2),transparent 55%),radial-gradient(circle at 100% 100%,rgba(80,140,255,.25),transparent 60%),var(--bg);
+}
+body.focus-golden .container{
+  background:radial-gradient(circle at 0% 50%,rgba(255,210,140,.15),transparent 60%),var(--bg);
+}
+body.stage-glow .container{
+  box-shadow:0 0 40px rgba(255,90,90,.35),0 0 70px rgba(255,40,70,.35);
+}
+</style>
 </head>
 <body>
-<div class="bg" aria-hidden="true">
-  <div class="orb orb-a"></div>
-  <div class="orb orb-b"></div>
-  <div class="orb orb-c"></div>
+<div class="container">
+  <a href="#" class="header-link" aria-label="Hedonist Lounge — Home">
+    <div class="header">
+      <div class="logo"><img src="H.png" alt="Hedonist Lounge logo" loading="lazy"></div>
+      <div class="title">
+        <h1>Hedonist Lounge</h1>
+        <p>Real nights • Budapest</p>
+      </div>
+    </div>
+  </a>
+
+  <div class="card section">
+    <div class="card-head">
+      <div class="card-head-title"><span class="dot"></span>NOW PLAYING</div>
+      <button
+        id="togglePlayer"
+        class="toggle-btn"
+        aria-controls="player"
+        aria-expanded="true"
+        onclick="(function(btn){
+          var p=document.getElementById('player');
+          if(!p) return;
+          var hidden=p.classList.toggle('hidden');
+          btn.textContent=hidden?'🎧 Show Player':'🎧 Hide Player';
+          btn.setAttribute('aria-expanded', String(!hidden));
+          try{localStorage.setItem('playerHidden', hidden?'true':'false');}catch(e){}
+        })(this)"
+      >🎧 Hide Player</button>
+    </div>
+    <div class="card-body">
+      <div id="player" class="player">
+        <iframe class="player-frame" src="https://display.soundtrack.io/BLLARJ" allowfullscreen loading="eager" referrerpolicy="no-referrer"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <div id="event-widget">
+    <div id="event-banner">
+      <div id="event-title">Next night at Hedonist</div>
+      <div id="event-datetime"></div>
+    </div>
+    <div id="countdown"></div>
+    <div id="crowd-level"></div>
+  </div>
+
+  <div class="section">
+    <div class="list">
+      <h2 class="section-title">Find Us</h2>
+
+      <a class="btn" href="https://www.facebook.com/hedonistbudapest2/events" target="_blank" rel="noopener noreferrer">
+        <div class="emoji">🗓️</div>
+        <div class="txt">
+          <strong>Events on Facebook</strong>
+          <span>Upcoming nights & tickets</span>
+        </div>
+      </a>
+
+      <button
+        id="toggleCalendar"
+        class="toggle-btn"
+        style="margin-top:10px;margin-bottom:6px"
+        aria-controls="calendarBlock"
+        aria-expanded="false"
+        onclick="(function(btn){
+          var c=document.getElementById('calendarBlock');
+          if(!c) return;
+          var hidden=c.classList.toggle('hidden');
+          btn.textContent=hidden?'🗓️ Show Calendar':'🗓️ Hide Calendar';
+          btn.setAttribute('aria-expanded', String(!hidden));
+        })(this)"
+      >🗓️ Show Calendar</button>
+
+      <div id="calendarBlock" class="calendar-wrapper hidden">
+        <iframe
+          class="calendar-frame"
+          src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Europe%2FBudapest&showPrint=0&showTabs=0&showCalendars=0&showTz=0&showTitle=0&src=hedonist1234%40hotmail.com&color=%23e4c441"
+          loading="lazy"
+          frameborder="0"
+          scrolling="no">
+        </iframe>
+      </div>
+
+      <a class="btn" href="https://calendar.google.com/calendar/r?cid=hedonist1234@hotmail.com" target="_blank" rel="noopener noreferrer">
+        <div class="emoji">📅</div>
+        <div class="txt">
+          <strong>Add to Calendar</strong>
+          <span>Subscribe on your device</span>
+        </div>
+      </a>
+
+      <div class="hr"></div>
+      <h2 class="section-title">Playlists</h2>
+      <a class="btn" href="https://open.spotify.com/playlist/26tdudnXR3SUfCjyElU09Z?si=iNsLSwXdTMqQRrrr4ZC6Iw" target="_blank" rel="noopener noreferrer">
+        <div class="emoji">☀️</div>
+        <div class="txt">
+          <strong>Goood Morning Budapest</strong>
+          <span>Breakfast time • calm & easy</span>
+        </div>
+      </a>
+      <a class="btn" href="https://open.spotify.com/playlist/04n8porc6EUwHQ3fr5iN6i?si=ushVdx3OQa2KVB0pgLihfQ" target="_blank" rel="noopener noreferrer">
+        <div class="emoji">🌞</div>
+        <div class="txt">
+          <strong>Have a lovely day</strong>
+          <span>Pre-party time • warm & groovy</span>
+        </div>
+      </a>
+      <a class="btn" href="https://open.spotify.com/playlist/592sxbGZtkpqE8T3t4ocGL?si=E_U8CaREQh6b4aboeX5CkQ&pi=EBFfo2PvRg2HF" target="_blank" rel="noopener noreferrer">
+        <div class="emoji">🌙</div>
+        <div class="txt">
+          <strong>Night is young</strong>
+          <span>Party time • deep & electric</span>
+        </div>
+      </a>
+
+      <div class="hr"></div>
+      <h2 class="section-title">Follow Us</h2>
+      <a class="btn" href="https://www.facebook.com/hedonistbudapest2" target="_blank" rel="noopener noreferrer">
+        <div class="emoji">📘</div>
+        <div class="txt">
+          <strong>Facebook</strong>
+          <span>Updates & events</span>
+        </div>
+      </a>
+      <a class="btn" href="https://www.instagram.com/hedonistbudapest_" target="_blank" rel="noopener noreferrer">
+        <div class="emoji">📸</div>
+        <div class="txt">
+          <strong>Instagram</strong>
+          <span>Stories & moments</span>
+        </div>
+      </a>
+
+      <div class="hr"></div>
+      <h2 class="section-title">Feedback</h2>
+      <a class="btn" href="mailto:hedonistlounge@hotmail.com" rel="noopener noreferrer">
+        <div class="emoji">💭</div>
+        <div class="txt">
+          <strong>Share a Thought</strong>
+          <span>We read everything</span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="footer" aria-label="copyright">© <span>Hedonist Lounge</span> — Budapest</div>
 </div>
 
-<div class="wrap">
-  <header class="hero">
-    <a class="brand" href="#" aria-label="Hedonist Lounge home">
-      <img class="logo-img" src="H.png" alt="Hedonist Lounge logo" width="48" height="48" loading="eager">
-      <div class="titles">
-        <h1>Hedonist Lounge <span class="at">— Budapest</span></h1>
-        <p class="sub">Real nights. Clean sound. No nonsense.</p>
-      </div>
-    </a>
-    <div class="actions">
-      <a class="btn solid" id="btnDirectionsTop" href="#" target="_blank" rel="noopener noreferrer">Get Directions</a>
-      <a class="btn ghost" id="btnEventsTop" href="https://www.facebook.com/hedonistbudapest2/events" target="_blank" rel="noopener noreferrer">Events</a>
-    </div>
-  </header>
+<div id="easter"></div>
 
-  <section class="grid">
-    <div class="card">
-      <div class="card-head">
-        <div class="kicker"><span class="dot"></span>Now Playing</div>
-        <div class="head-actions">
-          <button class="btn tiny" id="togglePlayer" type="button" aria-controls="playerWrap" aria-expanded="true">Hide</button>
-          <button class="btn tiny" id="refreshBtn" type="button">Refresh</button>
-        </div>
-      </div>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VY0CKKGRDP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-VY0CKKGRDP', { 'anonymize_ip': true });
+</script>
 
-      <div id="playerWrap" class="frame-wrap">
-        <div id="loading" class="loading" aria-live="polite">
-          <div class="spinner" aria-hidden="true"></div>
-          <div>Loading</div>
-        </div>
-        <iframe id="playerFrame" title="Now Playing" loading="eager" referrerpolicy="no-referrer" allowfullscreen></iframe>
-      </div>
+<script>
+(function(){
+  var player=document.getElementById('player');
+  var btn=document.getElementById('togglePlayer');
+  if(player && btn){
+    var isHidden=false;
+    try{ isHidden = (localStorage.getItem('playerHidden')==='true'); }catch(e){}
+    if(isHidden){
+      player.classList.add('hidden');
+      btn.textContent='🎧 Show Player';
+      btn.setAttribute('aria-expanded','false');
+    }else{
+      btn.setAttribute('aria-expanded','true');
+    }
+  }
 
-      <div class="foot">
-        <div class="hint">If the player is blocked, open in a regular browser tab.</div>
-        <button class="btn tiny" id="copyLink" type="button">Copy Link</button>
-      </div>
-    </div>
+  var easter=document.getElementById('easter');
+  var phrases=["you found the vibe","hedonist mode on","lights low, minds high","real nights only","glow with it"];
+  document.addEventListener('keydown',function(e){
+    if((e.key||'').toLowerCase()==='h'){
+      var text=phrases[Math.floor(Math.random()*phrases.length)];
+      easter.textContent=text;
+      easter.classList.add('show');
+      setTimeout(function(){easter.classList.remove('show')},2200);
+    }
+  });
+})();
+</script>
 
-    <div class="card" id="nextNightCard">
-      <div class="card-head">
-        <div class="kicker"><span class="dot"></span>Next Night at Hedonist</div>
-        <a class="btn tiny" id="eventLink" href="https://www.facebook.com/hedonistbudapest2/events" target="_blank" rel="noopener noreferrer">Open</a>
-      </div>
-      <div class="event">
-        <div class="event-title" id="eventTitle">Loading</div>
-        <div class="event-meta" id="eventDatetime"></div>
-        <div class="event-meta" id="countdown"></div>
-        <div class="event-meta" id="crowdLevel"></div>
-      </div>
-    </div>
+<script>
+(function(){
+  var CALENDAR_ID="hedonist1234@hotmail.com";
+  var GOOGLE_API_KEY=atob("QUl6YVN5REd1R210bjQ5VmlSNVNZWU1GcEo0UExuZjFjZTB0UEZJ");
+  var LAT=47.4979;
+  var LON=19.0402;
+  var EVENT_TYPE_MAP=[
+    {keyword:"comedy",type:"comedy"},
+    {keyword:"stand up",type:"comedy"},
+    {keyword:"stand-up",type:"comedy"},
+    {keyword:"techno",type:"techno"},
+    {keyword:"dj",type:"techno"},
+    {keyword:"open mic",type:"openmic"},
+    {keyword:"quiz",type:"quiz"}
+  ];
 
-    <div class="card">
-      <div class="card-head">
-        <div class="kicker"><span class="dot"></span>Find & Follow</div>
-        <button class="btn tiny" id="toggleCalendar" type="button" aria-controls="calendarBlock" aria-expanded="false">Show Calendar</button>
-      </div>
+  function detectEventType(title){
+    var t=(title||"").toLowerCase();
+    for(var i=0;i<EVENT_TYPE_MAP.length;i++){
+      if(t.indexOf(EVENT_TYPE_MAP[i].keyword)!==-1) return EVENT_TYPE_MAP[i].type;
+    }
+    return "generic";
+  }
 
-      <div class="stack">
-        <a class="row" id="btnDirections" href="#" target="_blank" rel="noopener noreferrer">
-          <div class="row-ico">📍</div>
-          <div class="row-txt">
-            <div class="row-strong">Find Us</div>
-            <div class="row-sub">Open in Google Maps</div>
-          </div>
-        </a>
+  function applyEventTheme(type){
+    var widget=document.getElementById("event-widget");
+    if(!widget) return;
+    widget.classList.remove("theme-comedy","theme-techno","theme-openmic","theme-quiz","theme-generic");
+    if(type==="comedy") widget.classList.add("theme-comedy");
+    else if(type==="techno") widget.classList.add("theme-techno");
+    else if(type==="openmic") widget.classList.add("theme-openmic");
+    else if(type==="quiz") widget.classList.add("theme-quiz");
+    else widget.classList.add("theme-generic");
+  }
 
-        <a class="row" href="https://www.facebook.com/hedonistbudapest2/events" target="_blank" rel="noopener noreferrer">
-          <div class="row-ico">🗓️</div>
-          <div class="row-txt">
-            <div class="row-strong">Facebook Events</div>
-            <div class="row-sub">Upcoming nights and updates</div>
-          </div>
-        </a>
+  function fetchNextEvent(){
+    var nowIso=new Date().toISOString();
+    var url="https://www.googleapis.com/calendar/v3/calendars/"+encodeURIComponent(CALENDAR_ID)+"/events?key="+encodeURIComponent(GOOGLE_API_KEY)+"&timeMin="+encodeURIComponent(nowIso)+"&singleEvents=true&orderBy=startTime&maxResults=1";
+    return fetch(url).then(function(res){
+      return res.json();
+    }).then(function(data){
+      if(!data.items||!data.items.length) return null;
+      return data.items[0];
+    }).catch(function(){
+      return null;
+    });
+  }
 
-        <a class="row" href="https://www.facebook.com/hedonistbudapest2" target="_blank" rel="noopener noreferrer">
-          <div class="row-ico">📘</div>
-          <div class="row-txt">
-            <div class="row-strong">Facebook</div>
-            <div class="row-sub">News and stories</div>
-          </div>
-        </a>
+  function fetchWeather(){
+    var url="https://api.open-meteo.com/v1/forecast?latitude="+LAT+"&longitude="+LON+"&current_weather=true&timezone=Europe/Budapest";
+    return fetch(url).then(function(res){
+      return res.json();
+    }).catch(function(){
+      return null;
+    });
+  }
 
-        <a class="row" href="https://www.instagram.com/hedonistbudapest_" target="_blank" rel="noopener noreferrer">
-          <div class="row-ico">📸</div>
-          <div class="row-txt">
-            <div class="row-strong">Instagram</div>
-            <div class="row-sub">Moments and clips</div>
-          </div>
-        </a>
+  function predictCrowdLevel(eventType,startDate,weather){
+    var score=0;
+    var day=startDate.getDay();
+    var hour=startDate.getHours();
 
-        <a class="row" href="mailto:hedonistlounge@hotmail.com">
-          <div class="row-ico">💭</div>
-          <div class="row-txt">
-            <div class="row-strong">Feedback</div>
-            <div class="row-sub">hedonistlounge@hotmail.com</div>
-          </div>
-        </a>
+    if(eventType==="techno") score+=3;
+    if(eventType==="comedy"||eventType==="openmic"||eventType==="quiz") score+=2;
+    if(day===5||day===6) score+=2;
+    if(hour>=20&&hour<=23) score+=2;
 
-        <a class="row" href="https://calendar.google.com/calendar/r?cid=hedonist1234@hotmail.com" target="_blank" rel="noopener noreferrer">
-          <div class="row-ico">📅</div>
-          <div class="row-txt">
-            <div class="row-strong">Subscribe to Calendar</div>
-            <div class="row-sub">Add to your device</div>
-          </div>
-        </a>
+    var temp=null;
+    if(weather && weather.current_weather){
+      temp=weather.current_weather.temperature;
+    }
+    if(temp!=null){
+      if(temp>=27) score+=1;
+      else if(temp<=3) score-=1;
+    }
 
-        <div id="calendarBlock" class="calendar hidden">
-          <iframe class="calendar-frame" title="Hedonist Calendar" loading="lazy" referrerpolicy="no-referrer"></iframe>
-        </div>
-      </div>
-    </div>
+    if(score>=6) return {label:"Busy night expected.",level:"high"};
+    if(score>=3) return {label:"Moderate crowd expected.",level:"medium"};
+    return {label:"Mellow night expected.",level:"low"};
+  }
 
-    <div class="card">
-      <div class="card-head">
-        <div class="kicker"><span class="dot"></span>Playlists</div>
-        <a class="btn tiny" href="https://open.spotify.com" target="_blank" rel="noopener noreferrer">Spotify</a>
-      </div>
+  function computeAmbientClasses(eventType,startDate,weather){
+    var classes=[];
+    var now=new Date();
+    var hour=now.getHours();
+    var day=now.getDay();
 
-      <div class="stack">
-        <a class="row" href="https://open.spotify.com/playlist/26tdudnXR3SUfCjyElU09Z?si=iNsLSwXdTMqQRrrr4ZC6Iw" target="_blank" rel="noopener noreferrer">
-          <div class="row-ico">☀️</div>
-          <div class="row-txt">
-            <div class="row-strong">Goood Morning Budapest</div>
-            <div class="row-sub">Breakfast time</div>
-          </div>
-        </a>
+    if(hour>=0 && hour<5) classes.push("afterhours");
+    if(hour>=16 && hour<18){
+      var minutes=now.getMinutes();
+      if(hour===16 && minutes>=30 || hour===17){
+        classes.push("golden");
+      }
+    }
+    if(day===5 || day===6) classes.push("weekend-pulse");
 
-        <a class="row" href="https://open.spotify.com/playlist/04n8porc6EUwHQ3fr5iN6i?si=ushVdx3OQa2KVB0pgLihfQ" target="_blank" rel="noopener noreferrer">
-          <div class="row-ico">🌞</div>
-          <div class="row-txt">
-            <div class="row-strong">Have a lovely day</div>
-            <div class="row-sub">Pre-party time</div>
-          </div>
-        </a>
+    var temp=null, code=null, wind=null;
+    if(weather && weather.current_weather){
+      temp=weather.current_weather.temperature;
+      code=weather.current_weather.weathercode;
+      wind=weather.current_weather.windspeed;
+    }
+    if(code!=null){
+      if((code>=51 && code<=67) || (code>=80 && code<=82) || (code>=95 && code<=99)){
+        classes.push("rainy");
+      }
+    }
+    if(temp!=null){
+      if(temp>=27) classes.push("heat-wave");
+      else if(temp<=5) classes.push("crisp-night");
+    }
+    if(wind!=null && wind>=35){
+      classes.push("windy");
+    }
 
-        <a class="row" href="https://open.spotify.com/playlist/592sxbGZtkpqE8T3t4ocGL?si=E_U8CaREQh6b4aboeX5CkQ&pi=EBFfo2PvRg2HF" target="_blank" rel="noopener noreferrer">
-          <div class="row-ico">🌙</div>
-          <div class="row-txt">
-            <div class="row-strong">Night is young</div>
-            <div class="row-sub">Party time</div>
-          </div>
-        </a>
-      </div>
-    </div>
+    if(eventType==="techno"){
+      classes.push("mood-techno");
+      if(classes.indexOf("afterhours")!==-1 || classes.indexOf("weekend-pulse")!==-1){
+        classes.push("techno-charge");
+      }
+    }else if(eventType==="comedy"){
+      classes.push("mood-comedy");
+      if(classes.indexOf("rainy")!==-1){
+        classes.push("cozy-inside");
+      }
+    }else if(eventType==="quiz"){
+      classes.push("mood-quiz");
+      if(classes.indexOf("golden")!==-1){
+        classes.push("focus-golden");
+      }
+    }else if(eventType==="openmic"){
+      classes.push("mood-openmic","stage-glow");
+    }
 
-    <div class="card">
-      <div class="card-head">
-        <div class="kicker"><span class="dot"></span>Neon Tap</div>
-        <div class="head-actions">
-          <button class="btn tiny" id="gameStart" type="button">Start</button>
-          <button class="btn tiny" id="gameReset" type="button">Reset</button>
-        </div>
-      </div>
+    return classes;
+  }
 
-      <div class="game">
-        <div class="game-top">
-          <div class="pill">Time: <span id="gameTime">10.0</span>s</div>
-          <div class="pill">Score: <span id="gameScore">0</span></div>
-          <div class="pill">Best: <span id="gameBest">0</span></div>
-        </div>
-        <div class="arena" id="arena" aria-label="Neon Tap game area">
-          <button class="target" id="target" type="button" aria-label="Tap target"></button>
-          <div class="game-hint" id="gameHint">Tap the dot as many times as you can in 10 seconds.</div>
-        </div>
-      </div>
-    </div>
-  </section>
+  function applyAmbientMood(classes){
+    var body=document.body;
+    var all=[
+      "afterhours","golden","weekend-pulse","rainy","heat-wave","crisp-night","windy",
+      "mood-techno","mood-comedy","mood-quiz","mood-openmic",
+      "techno-charge","cozy-inside","focus-golden","stage-glow"
+    ];
+    for(var i=0;i<all.length;i++){
+      body.classList.remove(all[i]);
+    }
+    for(var j=0;j<classes.length;j++){
+      body.classList.add(classes[j]);
+    }
+  }
 
-  <footer class="mini">© Hedonist Lounge — Budapest</footer>
-</div>
+  function startCountdown(startDate,title){
+    var countdownEl=document.getElementById("countdown");
+    if(!countdownEl) return;
+    function update(){
+      var now=Date.now();
+      var diff=startDate.getTime()-now;
+      if(diff<=0){
+        countdownEl.textContent="The event has started.";
+        return;
+      }
+      var hours=Math.floor(diff/3600000);
+      var minutes=Math.floor((diff%3600000)/60000);
+      countdownEl.textContent=title+" starts in "+hours+" hours "+minutes+" minutes.";
+    }
+    update();
+    setInterval(update,30000);
+  }
 
-<nav class="dock" aria-label="Quick actions">
-  <a class="dock-btn" id="dockDirections" href="#" target="_blank" rel="noopener noreferrer">Directions</a>
-  <a class="dock-btn" href="https://www.facebook.com/hedonistbudapest2/events" target="_blank" rel="noopener noreferrer">Events</a>
-  <button class="dock-btn" id="dockPlayer" type="button">Player</button>
-</nav>
+  function initEventWidget(){
+    var widget=document.getElementById("event-widget");
+    if(!widget) return;
+    Promise.all([fetchNextEvent(),fetchWeather()]).then(function(results){
+      var event=results[0];
+      var weather=results[1];
+      if(!event){
+        widget.style.display="none";
+        return;
+      }
+      var titleEl=document.getElementById("event-title");
+      var datetimeEl=document.getElementById("event-datetime");
+      var crowdEl=document.getElementById("crowd-level");
+
+      var title=event.summary||"Hedonist Lounge Event";
+      var startStr=null;
+      if(event.start){
+        if(event.start.dateTime) startStr=event.start.dateTime;
+        else if(event.start.date) startStr=event.start.date+"T20:00:00";
+      }
+      if(!startStr) startStr=new Date().toISOString();
+      var startDate=new Date(startStr);
+
+      if(titleEl) titleEl.textContent=title;
+      if(datetimeEl) datetimeEl.textContent=startDate.toLocaleString("en-GB",{dateStyle:"full",timeStyle:"short"});
+
+      var eventType=detectEventType(title);
+      applyEventTheme(eventType);
+
+      var crowd=predictCrowdLevel(eventType,startDate,weather);
+      if(crowdEl){
+        crowdEl.textContent=crowd.label;
+        crowdEl.classList.remove("crowd-high","crowd-medium","crowd-low");
+        if(crowd.level==="high") crowdEl.classList.add("crowd-high");
+        if(crowd.level==="medium") crowdEl.classList.add("crowd-medium");
+        if(crowd.level==="low") crowdEl.classList.add("crowd-low");
+      }
+
+      var ambientClasses=computeAmbientClasses(eventType,startDate,weather);
+      applyAmbientMood(ambientClasses);
+
+      startCountdown(startDate,title);
+    }).catch(function(){
+      var w=document.getElementById("event-widget");
+      if(w) w.style.display="none";
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded",initEventWidget);
+})();
+</script>
 </body>
 </html>
