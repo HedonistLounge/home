@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hedonist Lounge — Budapest</title>
+<meta name="description" content="Hedonist Lounge — Real nights in Budapest. Events, playlists, and the soundtrack playing now.">
+<meta name="theme-color" content="#0b0b0c">
+<link rel="icon" type="image/png" href="H.png">
+<link rel="preload" as="image" href="H.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+<meta property="og:title" content="Hedonist Lounge — Budapest">
+<meta property="og:description" content="Real nights in Budapest. Events, playlists, and the soundtrack playing now.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="H.png">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; script-src 'self' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self' https://www.googleapis.com https://api.open-meteo.com https://www.google-analytics.com; frame-src https://display.soundtrack.io https://calendar.google.com; child-src https://display.soundtrack.io https://calendar.google.com;">
+<link rel="stylesheet" href="style.css">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VY0CKKGRDP"></script>
+<script defer src="script.js"></script>
+</head>
+<body>
+<div class="bg" aria-hidden="true">
+  <div class="orb orb-a"></div>
+  <div class="orb orb-b"></div>
+  <div class="orb orb-c"></div>
+</div>
+
+<div class="wrap">
+  <header class="hero">
+    <a class="brand" href="#" aria-label="Hedonist Lounge home">
+      <img class="logo-img" src="H.png" alt="Hedonist Lounge logo" width="48" height="48" loading="eager">
+      <div class="titles">
+        <h1>Hedonist Lounge <span class="at">— Budapest</span></h1>
+        <p class="sub">Real nights. Clean sound. No nonsense.</p>
+      </div>
+    </a>
+    <div class="actions">
+      <a class="btn solid" id="btnDirectionsTop" href="#" target="_blank" rel="noopener noreferrer">Get Directions</a>
+      <a class="btn ghost" id="btnEventsTop" href="https://www.facebook.com/hedonistbudapest2/events" target="_blank" rel="noopener noreferrer">Events</a>
+    </div>
+  </header>
+
+  <section class="grid">
+    <div class="card">
+      <div class="card-head">
+        <div class="kicker"><span class="dot"></span>Now Playing</div>
+        <div class="head-actions">
+          <button class="btn tiny" id="togglePlayer" type="button" aria-controls="playerWrap" aria-expanded="true">Hide</button>
+          <button class="btn tiny" id="refreshBtn" type="button">Refresh</button>
+        </div>
+      </div>
+
+      <div id="playerWrap" class="frame-wrap">
+        <div id="loading" class="loading" aria-live="polite">
+          <div class="spinner" aria-hidden="true"></div>
+          <div>Loading</div>
+        </div>
+        <iframe id="playerFrame" title="Now Playing" loading="eager" referrerpolicy="no-referrer" allowfullscreen></iframe>
+      </div>
+
+      <div class="foot">
+        <div class="hint">If the player is blocked, open in a regular browser tab.</div>
+        <button class="btn tiny" id="copyLink" type="button">Copy Link</button>
+      </div>
+    </div>
+
+    <div class="card" id="nextNightCard">
+      <div class="card-head">
+        <div class="kicker"><span class="dot"></span>Next Night at Hedonist</div>
+        <a class="btn tiny" id="eventLink" href="https://www.facebook.com/hedonistbudapest2/events" target="_blank" rel="noopener noreferrer">Open</a>
+      </div>
+      <div class="event">
+        <div class="event-title" id="eventTitle">Loading</div>
+        <div class="event-meta" id="eventDatetime"></div>
+        <div class="event-meta" id="countdown"></div>
+        <div class="event-meta" id="crowdLevel"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="kicker"><span class="dot"></span>Find & Follow</div>
+        <button class="btn tiny" id="toggleCalendar" type="button" aria-controls="calendarBlock" aria-expanded="false">Show Calendar</button>
+      </div>
+
+      <div class="stack">
+        <a class="row" id="btnDirections" href="#" target="_blank" rel="noopener noreferrer">
+          <div class="row-ico">📍</div>
+          <div class="row-txt">
+            <div class="row-strong">Find Us</div>
+            <div class="row-sub">Open in Google Maps</div>
+            <div class="row-sub subtle">Csengery utca 11 · 1074 Budapest</div>
+          </div>
+        </a>
+
+        <a class="row" href="https://www.facebook.com/hedonistbudapest2/events" target="_blank" rel="noopener noreferrer">
+          <div class="row-ico">🗓️</div>
+          <div class="row-txt">
+            <div class="row-strong">Facebook Events</div>
+            <div class="row-sub">Upcoming nights and updates</div>
+          </div>
+        </a>
+
+        <a class="row" href="https://www.facebook.com/hedonistbudapest2" target="_blank" rel="noopener noreferrer">
+          <div class="row-ico">📘</div>
+          <div class="row-txt">
+            <div class="row-strong">Facebook</div>
+            <div class="row-sub">News and stories</div>
+          </div>
+        </a>
+
+        <a class="row" href="https://www.instagram.com/hedonistbudapest_" target="_blank" rel="noopener noreferrer">
+          <div class="row-ico">📸</div>
+          <div class="row-txt">
+            <div class="row-strong">Instagram</div>
+            <div class="row-sub">Moments and clips</div>
+          </div>
+        </a>
+
+        <a class="row" href="mailto:hedonistlounge@hotmail.com">
+          <div class="row-ico">💭</div>
+          <div class="row-txt">
+            <div class="row-strong">Feedback</div>
+            <div class="row-sub">hedonistlounge@hotmail.com</div>
+          </div>
+        </a>
+
+        <a class="row" href="https://calendar.google.com/calendar/r?cid=hedonist1234@hotmail.com" target="_blank" rel="noopener noreferrer">
+          <div class="row-ico">📅</div>
+          <div class="row-txt">
+            <div class="row-strong">Subscribe to Calendar</div>
+            <div class="row-sub">Add to your device</div>
+          </div>
+        </a>
+
+        <div id="calendarBlock" class="calendar hidden">
+          <iframe class="calendar-frame" title="Hedonist Calendar" loading="lazy" referrerpolicy="no-referrer"></iframe>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="kicker"><span class="dot"></span>Playlists</div>
+        <a class="btn tiny" href="https://open.spotify.com" target="_blank" rel="noopener noreferrer">Spotify</a>
+      </div>
+
+      <div class="stack">
+        <a class="row" href="https://open.spotify.com/playlist/26tdudnXR3SUfCjyElU09Z?si=iNsLSwXdTMqQRrrr4ZC6Iw" target="_blank" rel="noopener noreferrer">
+          <div class="row-ico">☀️</div>
+          <div class="row-txt">
+            <div class="row-strong">Good Morning Budapest</div>
+            <div class="row-sub">Chill / brunch playlist</div>
+          </div>
+        </a>
+
+        <a class="row" href="https://open.spotify.com/playlist/04n8porc6EUwHQ3fr5iN6i?si=ushVdx3OQa2KVB0pgLihfQ" target="_blank" rel="noopener noreferrer">
+          <div class="row-ico">🌞</div>
+          <div class="row-txt">
+            <div class="row-strong">Have a lovely day</div>
+            <div class="row-sub">Pre-party time</div>
+          </div>
+        </a>
+
+        <a class="row" href="https://open.spotify.com/playlist/592sxbGZtkpqE8T3t4ocGL?si=E_U8CaREQh6b4aboeX5CkQ&pi=EBFfo2PvRg2HF" target="_blank" rel="noopener noreferrer">
+          <div class="row-ico">🌙</div>
+          <div class="row-txt">
+            <div class="row-strong">Night is young</div>
+            <div class="row-sub">Party time</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="kicker"><span class="dot"></span>Neon Tap</div>
+        <div class="head-actions">
+          <button class="btn tiny" id="gameStart" type="button">Start</button>
+          <button class="btn tiny" id="gameReset" type="button">Reset</button>
+        </div>
+      </div>
+
+      <div class="game">
+        <div class="game-top">
+          <div class="pill">Time: <span id="gameTime">10.0</span>s</div>
+          <div class="pill">Score: <span id="gameScore">0</span></div>
+          <div class="pill">Best: <span id="gameBest">0</span></div>
+        </div>
+        <div class="arena" id="arena" aria-label="Neon Tap game area">
+          <button class="target" id="target" type="button" aria-label="Tap target"></button>
+          <div class="game-hint" id="gameHint">Tap the dot as many times as you can in 10 seconds.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="mini">© Hedonist Lounge — Budapest</footer>
+</div>
+
+<nav class="dock" aria-label="Quick actions">
+  <a class="dock-btn" id="dockDirections" href="#" target="_blank" rel="noopener noreferrer">Directions</a>
+  <a class="dock-btn" href="https://www.facebook.com/hedonistbudapest2/events" target="_blank" rel="noopener noreferrer">Events</a>
+  <button class="dock-btn" id="dockPlayer" type="button">Player</button>
+</nav>
+</body>
+</html>
