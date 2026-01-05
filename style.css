@@ -1,177 +1,374 @@
-:root{
-  --bg:#0b0b0c;
-  --fg:#ffffff;
-  --muted:#a7a7a7;
-  --accent:#19f0a8;
-  --accent-2:#7c4dff;
-  --card:#141517;
-  --ring:rgba(25,240,168,.25);
-  --line:rgba(255,255,255,.08);
-}
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--fg);
-  font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  overflow-x:hidden;
-}
-a{color:inherit}
-.bg{position:fixed; inset:0; overflow:hidden; z-index:-1}
-.orb{position:absolute; filter:blur(70px); opacity:.35; mix-blend-mode:screen; border-radius:50%}
-.orb-a{width:560px; height:560px; left:-140px; top:-140px; background:radial-gradient(circle at 30% 30%, var(--accent), transparent 60%); animation:float 16s ease-in-out infinite}
-.orb-b{width:460px; height:460px; right:-120px; top:30px; background:radial-gradient(circle at 60% 40%, var(--accent-2), transparent 60%); animation:float 18s ease-in-out infinite reverse}
-.orb-c{width:380px; height:380px; left:28%; bottom:-160px; background:radial-gradient(circle at 40% 60%, #00d2ff, transparent 60%); animation:float 22s ease-in-out infinite}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(18px)}}
+const CONFIG = {
+  soundtrackUrl: "https://display.soundtrack.io/BLLARJ",
+  calendarEmbedUrl: "https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Europe%2FBudapest&showPrint=0&showTabs=0&showCalendars=0&showTz=0&showTitle=0&src=hedonist1234%40hotmail.com&color=%23e4c441",
+  calendarId: "hedonist1234@hotmail.com",
+  googleApiKey: "AIzaSyDGuGmtn49ViR5SYYMFpJ4PLnf1ce0tPFI",
+  gaMeasurementId: "G-VY0CKKGRDP",
+  placeQuery: "Csengery utca 11, 1074 Budapest",
+  lat: 47.4979,
+  lon: 19.0402,
+  timezone: "Europe/Budapest"
+};
 
-.wrap{max-width:980px; margin:0 auto; padding:22px 18px 90px}
-.hero{display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:14px; margin:8px 0 16px}
-.brand{display:flex; align-items:center; gap:14px; text-decoration:none}
-.logo-img{width:48px; height:48px; border-radius:14px; box-shadow:0 12px 34px var(--ring); background:linear-gradient(135deg, rgba(25,240,168,.25), rgba(124,77,255,.18))}
-.titles h1{font-size:clamp(22px,4vw,34px); margin:0; letter-spacing:.2px}
-.titles .at{opacity:.85}
-.sub{margin:4px 0 0; color:var(--muted); font-size:14px}
-.actions{display:flex; gap:10px; flex-wrap:wrap}
-
-.btn{
-  padding:10px 14px;
-  border-radius:14px;
-  text-decoration:none;
-  color:var(--fg);
-  border:1px solid rgba(255,255,255,.12);
-  background:transparent;
-  cursor:pointer;
-  transition:transform .15s ease, box-shadow .2s ease, border-color .2s ease;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
+window.dataLayer = window.dataLayer || [];
+function gtag(){ window.dataLayer.push(arguments); }
+gtag("js", new Date());
+if (CONFIG.gaMeasurementId) {
+  gtag("config", CONFIG.gaMeasurementId, { anonymize_ip: true });
 }
-.btn:hover{transform:translateY(-1px); box-shadow:0 10px 22px rgba(0,0,0,.35); border-color:rgba(255,255,255,.25)}
-.btn:active{transform:translateY(0)}
-.btn.solid{background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,0))}
-.btn.ghost{background:transparent}
-.btn.tiny{padding:8px 12px; font-size:12px; border-radius:12px}
 
-.grid{display:grid; gap:14px}
-@media(min-width:860px){.grid{grid-template-columns:1fr 1fr}}
+function $(id){ return document.getElementById(id); }
 
-.card{
-  background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,0));
-  border:1px solid var(--line);
-  border-radius:22px;
-  padding:18px;
-  box-shadow:0 20px 60px rgba(0,0,0,.45);
+function safeSetText(el, text){ if (el) el.textContent = text; }
+
+function buildMapsDirectionsUrl() {
+  const q = encodeURIComponent(CONFIG.placeQuery);
+  return "https://www.google.com/maps/search/?api=1&query=" + q;
 }
-.card-head{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:12px}
-.kicker{display:flex; align-items:center; gap:10px; text-transform:uppercase; letter-spacing:.9px; font-weight:800; font-size:12px; color:#eaeaea}
-.dot{width:9px; height:9px; border-radius:50%; background:radial-gradient(circle at 40% 40%, #3cffc3, #00e39a); box-shadow:0 0 10px rgba(25,240,168,.75); animation:pulse 2s ease-in-out infinite}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
-.head-actions{display:flex; gap:8px; flex-wrap:wrap}
 
-.frame-wrap{position:relative; border-radius:18px; overflow:hidden; background:var(--card); border:1px solid rgba(255,255,255,.08)}
-iframe{width:100%; height:320px; border:0; display:block; background:#0c0c0d}
-@media(min-width:860px){iframe{height:340px}}
-.loading{
-  position:absolute; inset:0; display:flex; flex-direction:column;
-  align-items:center; justify-content:center; gap:12px;
-  background:linear-gradient(180deg, rgba(0,0,0,.30), rgba(0,0,0,.16));
-  color:#eaeaea; z-index:2; transition:opacity .25s ease;
+function initLinks() {
+  const url = buildMapsDirectionsUrl();
+  const ids = ["btnDirections", "dockDirections", "btnDirectionsTop"];
+  for (const id of ids) {
+    const el = $(id);
+    if (el) el.setAttribute("href", url);
+  }
 }
-.spinner{width:26px; height:26px; border:3px solid rgba(255,255,255,.4); border-top-color:transparent; border-radius:50%; animation:spin 1s linear infinite}
-@keyframes spin{to{transform:rotate(1turn)}}
 
-.foot{display:flex; align-items:center; justify-content:space-between; gap:10px; padding-top:10px}
-.hint{color:var(--muted); font-size:12px}
+function initPlayer() {
+  const frame = $("playerFrame");
+  const overlay = $("loading");
+  const refreshBtn = $("refreshBtn");
+  const toggleBtn = $("togglePlayer");
+  const wrap = $("playerWrap");
 
-.stack{display:grid; gap:10px}
-.row{
-  display:flex; align-items:center; gap:12px;
-  padding:14px;
-  border-radius:16px;
-  text-decoration:none;
-  background:rgba(26,27,30,.65);
-  border:1px solid rgba(255,255,255,.08);
-  transition:transform .15s ease, border-color .2s ease, box-shadow .2s ease;
-}
-.row:hover{transform:translateY(-1px); border-color:rgba(255,255,255,.22); box-shadow:0 0 18px rgba(25,240,168,.18),0 0 28px rgba(124,77,255,.14)}
-.row-ico{font-size:18px}
-.row-txt{display:flex; flex-direction:column; gap:2px}
-.row-strong{font-weight:800; letter-spacing:.2px}
-.row-sub{color:var(--muted); font-size:12px}
+  if (frame) frame.setAttribute("src", CONFIG.soundtrackUrl);
 
-.calendar{margin-top:6px}
-.calendar.hidden{display:none}
-.calendar-frame{height:520px; border-radius:16px; overflow:hidden}
-@media(max-width:520px){.calendar-frame{height:540px}}
+  function hideOverlaySoon() {
+    if (!overlay) return;
+    setTimeout(() => (overlay.style.opacity = "0"), 150);
+    setTimeout(() => (overlay.style.display = "none"), 350);
+  }
 
-.event{display:flex; flex-direction:column; gap:8px}
-.event-title{font-weight:900; font-size:18px; letter-spacing:.2px}
-.event-meta{color:var(--muted); font-size:13px}
+  if (frame) frame.addEventListener("load", hideOverlaySoon);
 
-.mini{display:flex; justify-content:center; margin-top:16px; color:var(--muted); font-size:12px}
+  if (refreshBtn && frame && overlay) {
+    refreshBtn.addEventListener("click", () => {
+      overlay.style.display = "flex";
+      overlay.style.opacity = "1";
+      const src = frame.getAttribute("src") || "";
+      frame.setAttribute("src", src.split("?")[0] + "?t=" + Date.now());
+    });
+  }
 
-.dock{
-  position:fixed; left:0; right:0; bottom:0;
-  display:flex; gap:10px; padding:12px 14px;
-  background:rgba(10,10,12,.72);
-  border-top:1px solid rgba(255,255,255,.08);
-  backdrop-filter:blur(10px);
-  z-index:50;
-}
-.dock-btn{
-  flex:1;
-  text-align:center;
-  padding:12px 12px;
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,.12);
-  text-decoration:none;
-  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0));
-  color:var(--fg);
-  font-weight:800;
-  letter-spacing:.2px;
-}
-.dock-btn:active{transform:translateY(1px)}
+  function setPlayerHidden(hidden) {
+    if (!wrap || !toggleBtn) return;
+    wrap.style.display = hidden ? "none" : "block";
+    toggleBtn.textContent = hidden ? "Show" : "Hide";
+    toggleBtn.setAttribute("aria-expanded", String(!hidden));
+    try { localStorage.setItem("playerHidden", hidden ? "true" : "false"); } catch {}
+  }
 
-.game{display:flex; flex-direction:column; gap:12px}
-.game-top{display:flex; flex-wrap:wrap; gap:10px}
-.pill{
-  padding:8px 10px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.10);
-  background:rgba(26,27,30,.45);
-  color:#eaeaea;
-  font-size:12px;
+  let hidden = false;
+  try { hidden = localStorage.getItem("playerHidden") === "true"; } catch {}
+  setPlayerHidden(hidden);
+
+  if (toggleBtn) {
+    toggleBtn.addEventListener("click", () => {
+      let isHiddenNow = wrap && wrap.style.display === "none";
+      setPlayerHidden(!isHiddenNow);
+    });
+  }
+
+  const dockPlayer = $("dockPlayer");
+  if (dockPlayer) {
+    dockPlayer.addEventListener("click", () => {
+      const isHiddenNow = wrap && wrap.style.display === "none";
+      setPlayerHidden(!isHiddenNow);
+      if (!isHiddenNow) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    });
+  }
+
+  const copyBtn = $("copyLink");
+  if (copyBtn) {
+    copyBtn.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        copyBtn.textContent = "Copied";
+        setTimeout(() => (copyBtn.textContent = "Copy Link"), 1200);
+      } catch {
+        copyBtn.textContent = "Copy failed";
+        setTimeout(() => (copyBtn.textContent = "Copy Link"), 1200);
+      }
+    });
+  }
 }
-.arena{
-  position:relative;
-  height:260px;
-  border-radius:18px;
-  border:1px solid rgba(255,255,255,.10);
-  background:radial-gradient(circle at 20% 20%, rgba(25,240,168,.10), transparent 45%), radial-gradient(circle at 80% 70%, rgba(124,77,255,.10), transparent 45%), rgba(10,10,12,.55);
-  overflow:hidden;
+
+function initCalendar() {
+  const iframe = document.querySelector(".calendar-frame");
+  const block = $("calendarBlock");
+  const btn = $("toggleCalendar");
+  if (iframe) iframe.setAttribute("src", CONFIG.calendarEmbedUrl);
+
+  function setHidden(hidden) {
+    if (!block || !btn) return;
+    block.classList.toggle("hidden", hidden);
+    btn.textContent = hidden ? "Show Calendar" : "Hide Calendar";
+    btn.setAttribute("aria-expanded", String(!hidden));
+  }
+
+  setHidden(true);
+
+  if (btn) {
+    btn.addEventListener("click", () => {
+      const hidden = block ? block.classList.contains("hidden") : true;
+      setHidden(!hidden);
+    });
+  }
 }
-.target{
-  position:absolute;
-  width:22px; height:22px;
-  border-radius:50%;
-  border:0;
-  background:radial-gradient(circle at 40% 40%, #ffffff, var(--accent));
-  box-shadow:0 0 18px rgba(25,240,168,.65), 0 0 28px rgba(124,77,255,.35);
-  cursor:pointer;
-  transform:translate(-50%,-50%);
-  display:none;
+
+function detectEventType(title) {
+  const t = (title || "").toLowerCase();
+  const rules = [
+    ["comedy", "comedy"],
+    ["stand up", "comedy"],
+    ["stand-up", "comedy"],
+    ["techno", "techno"],
+    ["dj", "techno"],
+    ["open mic", "openmic"],
+    ["quiz", "quiz"]
+  ];
+  for (const [k, v] of rules) {
+    if (t.includes(k)) return v;
+  }
+  return "generic";
 }
-.game-hint{
-  position:absolute;
-  inset:0;
-  display:grid;
-  place-items:center;
-  color:var(--muted);
-  font-size:12px;
-  text-align:center;
-  padding:14px;
+
+function extractFacebookEventUrl(text) {
+  const s = String(text || "");
+  const m = s.match(/https?:\/\/(?:www\.)?facebook\.com\/events\/\d+/i);
+  return m ? m[0] : null;
 }
+
+function fetchNextEvent() {
+  const nowIso = new Date().toISOString();
+  const url =
+    "https://www.googleapis.com/calendar/v3/calendars/" +
+    encodeURIComponent(CONFIG.calendarId) +
+    "/events?key=" +
+    encodeURIComponent(CONFIG.googleApiKey) +
+    "&timeMin=" +
+    encodeURIComponent(nowIso) +
+    "&singleEvents=true&orderBy=startTime&maxResults=1";
+  return fetch(url)
+    .then((r) => r.json())
+    .then((d) => (d && d.items && d.items.length ? d.items[0] : null))
+    .catch(() => null);
+}
+
+function fetchWeather() {
+  const url =
+    "https://api.open-meteo.com/v1/forecast?latitude=" +
+    CONFIG.lat +
+    "&longitude=" +
+    CONFIG.lon +
+    "&current_weather=true&timezone=" +
+    encodeURIComponent(CONFIG.timezone);
+  return fetch(url).then((r) => r.json()).catch(() => null);
+}
+
+function predictCrowdLevel(eventType, startDate, weather) {
+  let score = 0;
+  const day = startDate.getDay();
+  const hour = startDate.getHours();
+
+  if (eventType === "techno") score += 3;
+  if (eventType === "comedy" || eventType === "openmic" || eventType === "quiz") score += 2;
+  if (day === 5 || day === 6) score += 2;
+  if (hour >= 20 && hour <= 23) score += 2;
+
+  let temp = null;
+  if (weather && weather.current_weather) temp = weather.current_weather.temperature;
+  if (temp != null) {
+    if (temp >= 27) score += 1;
+    else if (temp <= 3) score -= 1;
+  }
+
+  if (score >= 6) return { label: "Busy night expected.", level: "high" };
+  if (score >= 3) return { label: "Moderate crowd expected.", level: "medium" };
+  return { label: "Mellow night expected.", level: "low" };
+}
+
+function formatDateTime(dt) {
+  try {
+    return dt.toLocaleString("en-GB", { dateStyle: "full", timeStyle: "short" });
+  } catch {
+    return String(dt);
+  }
+}
+
+function startCountdown(startDate, title) {
+  const el = $("countdown");
+  if (!el) return;
+  const t = String(title || "This");
+  function tick() {
+    const diff = startDate.getTime() - Date.now();
+    if (diff <= 0) {
+      el.textContent = "Happening now.";
+      return;
+    }
+    const hours = Math.floor(diff / 3600000);
+    const minutes = Math.floor((diff % 3600000) / 60000);
+    el.textContent = t + " starts in " + hours + "h " + minutes + "m.";
+  }
+  tick();
+  setInterval(tick, 30000);
+}
+
+function initNextNight() {
+  const card = $("nextNightCard");
+  const link = $("eventLink");
+  const titleEl = $("eventTitle");
+  const dtEl = $("eventDatetime");
+  const crowdEl = $("crowdLevel");
+
+  Promise.all([fetchNextEvent(), fetchWeather()]).then(([event, weather]) => {
+    if (!event) {
+      if (card) {
+        safeSetText(titleEl, "See upcoming events");
+        safeSetText(dtEl, "Open the events list for the latest schedule.");
+        safeSetText(crowdEl, "");
+      }
+      return;
+    }
+
+    const title = event.summary || "Hedonist Night";
+    let startStr = null;
+    if (event.start) {
+      if (event.start.dateTime) startStr = event.start.dateTime;
+      else if (event.start.date) startStr = event.start.date + "T20:00:00";
+    }
+    const startDate = new Date(startStr || new Date().toISOString());
+    safeSetText(titleEl, title);
+    safeSetText(dtEl, formatDateTime(startDate));
+
+    const fb = extractFacebookEventUrl(event.description);
+    if (link) {
+      link.setAttribute("href", fb || link.getAttribute("href") || "#");
+      link.textContent = fb ? "Open FB Event" : "Open";
+    }
+
+    const eventType = detectEventType(title);
+    const crowd = predictCrowdLevel(eventType, startDate, weather);
+    if (crowdEl) {
+      safeSetText(crowdEl, crowd.label);
+      crowdEl.classList.remove("crowd-high", "crowd-medium", "crowd-low");
+      crowdEl.classList.add(
+        crowd.level === "high" ? "crowd-high" : crowd.level === "medium" ? "crowd-medium" : "crowd-low"
+      );
+    }
+
+    startCountdown(startDate, title);
+  });
+}
+
+function initGame() {
+  const startBtn = $("gameStart");
+  const resetBtn = $("gameReset");
+  const arena = $("arena");
+  const target = $("target");
+  const hint = $("gameHint");
+  const timeEl = $("gameTime");
+  const scoreEl = $("gameScore");
+  const bestEl = $("gameBest");
+
+  if (!startBtn || !resetBtn || !arena || !target || !hint || !timeEl || !scoreEl || !bestEl) return;
+
+  let running = false;
+  let score = 0;
+  let best = 0;
+  let startAt = 0;
+  let raf = 0;
+
+  try {
+    best = Number(localStorage.getItem("neonBest") || "0") || 0;
+  } catch {}
+  bestEl.textContent = String(best);
+
+  function placeTarget() {
+    const rect = arena.getBoundingClientRect();
+    const pad = 18;
+    const x = pad + Math.random() * Math.max(1, rect.width - pad * 2);
+    const y = pad + Math.random() * Math.max(1, rect.height - pad * 2);
+    target.style.left = x + "px";
+    target.style.top = y + "px";
+  }
+
+  function setRunning(on) {
+    running = on;
+    if (on) {
+      score = 0;
+      startAt = performance.now();
+      scoreEl.textContent = "0";
+      hint.style.display = "none";
+      target.style.display = "block";
+      placeTarget();
+      loop();
+    } else {
+      target.style.display = "none";
+      hint.style.display = "grid";
+      cancelAnimationFrame(raf);
+      raf = 0;
+      if (score > best) {
+        best = score;
+        bestEl.textContent = String(best);
+        try { localStorage.setItem("neonBest", String(best)); } catch {}
+      }
+    }
+  }
+
+  function loop() {
+    if (!running) return;
+    const elapsed = (performance.now() - startAt) / 1000;
+    const left = Math.max(0, 10 - elapsed);
+    timeEl.textContent = left.toFixed(1);
+    if (left <= 0) {
+      setRunning(false);
+      timeEl.textContent = "0.0";
+      return;
+    }
+    raf = requestAnimationFrame(loop);
+  }
+
+  target.addEventListener("click", () => {
+    if (!running) return;
+    score += 1;
+    scoreEl.textContent = String(score);
+    placeTarget();
+  });
+
+  startBtn.addEventListener("click", () => {
+    if (running) return;
+    setRunning(true);
+  });
+
+  resetBtn.addEventListener("click", () => {
+    setRunning(false);
+    score = 0;
+    scoreEl.textContent = "0";
+    timeEl.textContent = "10.0";
+    try { localStorage.removeItem("neonBest"); } catch {}
+    best = 0;
+    bestEl.textContent = "0";
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  initLinks();
+  initPlayer();
+  initCalendar();
+  initNextNight();
+  initGame();
+});
